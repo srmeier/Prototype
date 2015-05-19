@@ -155,6 +155,22 @@ SDL_Surface* AdSpriteManager::BuildSprite(const char* pString) {
 			iIndex = 0x1B;
 		} else if(pString[i]=='1') {
 			iIndex = 0x1C;
+		} else if(pString[i]=='2') {
+			iIndex = 0x1D;
+		} else if(pString[i]=='3') {
+			iIndex = 0x1E;
+		} else if(pString[i]=='4') {
+			iIndex = 0x1F;
+		} else if(pString[i]=='5') {
+			iIndex = 0x20;
+		} else if(pString[i]=='6') {
+			iIndex = 0x21;
+		} else if(pString[i]=='7') {
+			iIndex = 0x22;
+		} else if(pString[i]=='8') {
+			iIndex = 0x23;
+		} else if(pString[i]=='9') {
+			iIndex = 0x24;
 		}
 
 		rect.x = s_iSprWidth*i;

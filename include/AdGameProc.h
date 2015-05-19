@@ -7,14 +7,15 @@
 //-----------------------------------------------------------------------------
 class AdGameProc: public AdProcedure {
 protected:
-	SDL_Surface* m_pTopBarGUI;
+	SDL_Surface*       m_pTopBarGUI;
+	class AdOverworld* m_pOverworld;
 
 public:
 	void Init(void);
 	void Quit(void);
 
 public:
-	void Update(void);
+	void Update(SDL_Event* sdlEvent);
 	void Render(void);
 
 public:

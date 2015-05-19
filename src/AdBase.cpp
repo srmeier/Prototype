@@ -151,8 +151,8 @@ void AdBase::Quit(void) {
 }
 
 //-----------------------------------------------------------------------------
-void AdBase::Update(void) {
-	if(s_pActiveProc) s_pActiveProc->Update();
+void AdBase::Update(SDL_Event* sdlEvent) {
+	if(s_pActiveProc) s_pActiveProc->Update(sdlEvent);
 }
 
 //-----------------------------------------------------------------------------

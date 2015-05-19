@@ -14,7 +14,8 @@ DESIGN:
 - upgrades
 	- craftable item which can be used to upgrade turrets and missles
 - grenades
-- meditation changes the elemental damage of your attacks?
+- meditation changes the elemental damage of your attacks
+	- this occurs at designated statues throughout the world
 - each heart is broken up in thirds
 
 TECH:
@@ -23,7 +24,6 @@ TECH:
 - custom pixel art
 - C++ compiler but heavy on C
 - BMP images only
-- TTF font
 - movement similar to my platformer prototype
 
 PHILOSOPHY:

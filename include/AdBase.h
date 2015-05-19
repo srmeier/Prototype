@@ -32,7 +32,7 @@ public:
 	static void Quit(void);
 
 public:
-	static void Update(void);
+	static void Update(SDL_Event* sdlEvent);
 	static void Render(void);
 
 public:

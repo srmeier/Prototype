@@ -16,7 +16,7 @@ void AdProcedure::Init(void) {}
 void AdProcedure::Quit(void) {}
 
 //-----------------------------------------------------------------------------
-void AdProcedure::Update(void) {}
+void AdProcedure::Update(SDL_Event* sdlEvent) {}
 
 //-----------------------------------------------------------------------------
 void AdProcedure::Render(void) {}

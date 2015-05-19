@@ -1,18 +1,39 @@
 /*
 */
-
+#include "Player.h"
 #include "AdScreen.h"
 #include "AdGameProc.h"
+#include "AdOverworld.h"
 #include "AdSpriteManager.h"
 
-//-----------------------------------------------------------------------------
-AdGameProc::AdGameProc(void) {}
+#include "levels/LevelOne.h"
 
 //-----------------------------------------------------------------------------
-AdGameProc::~AdGameProc(void) {}
+AdGameProc::AdGameProc(void) {
+	m_pOverworld = new LevelOne();
+}
+
+//-----------------------------------------------------------------------------
+AdGameProc::~AdGameProc(void) {
+	delete m_pOverworld;
+}
 
 //-----------------------------------------------------------------------------
 void AdGameProc::Init(void) {
+	Player::m_iCogs          = 3;
+	Player::m_iLenses        = 100;
+	Player::m_iSprings       = 12;
+	Player::m_iTorches       = 24;
+	Player::m_iWrenches      = 53;
+	Player::m_iDrillBits     = 98;
+	Player::m_iElementalType = 0;
+
+	while(Player::Health()!=12) Player::RestoreHealth();
+	while(Player::Hunger()!= 7) Player::RestoreHunger();
+	while(Player::Thirst()!= 7) Player::RestoreThirst();
+
+	m_pOverworld->Init();
+	
 	/* TopBarGUI - Background */
 
 	int pTopBarGUIInds[] = {
@@ -151,47 +172,142 @@ void AdGameProc::Init(void) {
 
 //-----------------------------------------------------------------------------
 void AdGameProc::Quit(void) {
+	m_pOverworld->Quit();
+
 	SDL_FreeSurface(m_pTopBarGUI);
 	m_pTopBarGUI = NULL;
 }
 
 //-----------------------------------------------------------------------------
-void AdGameProc::Update(void) {
+void AdGameProc::Update(SDL_Event* sdlEvent) {
+	switch(sdlEvent->type) {
+		case SDL_KEYDOWN: {
+			switch(sdlEvent->key.keysym.sym) {
+				case SDLK_ESCAPE: {
+					exit(0);
+				} break;
+
+				case SDLK_UP: {
+					Player::m_pntPosition.y--;
+				} break;
+
+				case SDLK_DOWN: {
+					Player::m_pntPosition.y++;
+				} break;
+
+				case SDLK_LEFT: {
+					Player::m_pntPosition.x--;
+				} break;
+
+				case SDLK_RIGHT: {
+					Player::m_pntPosition.x++;
+				} break;
+			}
+		} break;
+		
+		case SDL_KEYUP: {
+			switch(sdlEvent->key.keysym.sym) {
+				case SDLK_UP: break;
+				case SDLK_DOWN: break;
+				case SDLK_LEFT: break;
+				case SDLK_RIGHT: break;
+			}
+		} break;
+	}
+
+	m_pOverworld->Update();
 }
 
 //-----------------------------------------------------------------------------
 void AdGameProc::Render(void) {
+	m_pOverworld->Render();
+
 	/* TopBarGUI - Background */
 
+	char tempStr[0x5];
 	SDL_Point pnt = {0, 0};
 	AdScreen::DrawSprite(pnt, m_pTopBarGUI);
 
 	/* TopBarGUI - Health */
 
-	int pIndHeart[] = {
+	int pIndHeart0[] = {
 		0x102,0x103,
 		0x142,0x143
 	};
 
+	int pIndHeart1[] = {
+		0x182,0x183,
+		0x1C2,0x1C3
+	};
+
+	int pIndHeart2[] = {
+		0x202,0x203,
+		0x242,0x243
+	};
+
+	int pIndHeart3[] = {
+		0x282,0x283,
+		0x2C2,0x2C3
+	};
+
 	SDL_Surface* pSprHeart = AdSpriteManager::BuildSprite(
-		2, 2, pIndHeart
+		2, 2,
+		(Player::Health()>=3)?pIndHeart0:
+		(Player::Health()==2)?pIndHeart1:
+		(Player::Health()==1)?pIndHeart2:
+		pIndHeart3
 	);
 
 	pnt.x = 104, pnt.y = 12;
 	AdScreen::DrawSprite(pnt, pSprHeart);
+	SDL_FreeSurface(pSprHeart);
+
+	pSprHeart = AdSpriteManager::BuildSprite(
+		2, 2,
+		(Player::Health()>=6)?pIndHeart0:
+		(Player::Health()==5)?pIndHeart1:
+		(Player::Health()==4)?pIndHeart2:
+		pIndHeart3
+	);
+
 	pnt.x = 104+16;
 	AdScreen::DrawSprite(pnt, pSprHeart);
+	SDL_FreeSurface(pSprHeart);
+
+	pSprHeart = AdSpriteManager::BuildSprite(
+		2, 2,
+		(Player::Health()>=9)?pIndHeart0:
+		(Player::Health()==8)?pIndHeart1:
+		(Player::Health()==7)?pIndHeart2:
+		pIndHeart3
+	);
+
 	pnt.x = 104+32;
 	AdScreen::DrawSprite(pnt, pSprHeart);
+	SDL_FreeSurface(pSprHeart);
+
+	pSprHeart = AdSpriteManager::BuildSprite(
+		2, 2,
+		(Player::Health()>=12)?pIndHeart0:
+		(Player::Health()==11)?pIndHeart1:
+		(Player::Health()==10)?pIndHeart2:
+		pIndHeart3
+	);
+
 	pnt.x = 104+48;
 	AdScreen::DrawSprite(pnt, pSprHeart);
-
 	SDL_FreeSurface(pSprHeart);
 
 	/* TopBarGUI - Hunger bar */
 
 	int pIndMeatBar[] = {
-		0x104,0x105,0x105,0x105,0x105,0x105,0x106
+		(Player::Hunger()>0)?0x104:0x184,
+		(Player::Hunger()>1)?0x105:0x185,
+		(Player::Hunger()>2)?0x105:0x185,
+		(Player::Hunger()>3)?0x105:0x185,
+		(Player::Hunger()>4)?0x105:0x185,
+		(Player::Hunger()>5)?0x105:0x185,
+		(Player::Hunger()>6)?0x106:0x186
 	};
 
 	SDL_Surface* pSprMeatBar = AdSpriteManager::BuildSprite(
@@ -205,7 +321,13 @@ void AdGameProc::Render(void) {
 	/* TopBarGUI - Thirst bar */
 
 	int pIndWaterBar[] = {
-		0x144,0x145,0x145,0x145,0x145,0x145,0x146
+		(Player::Thirst()>0)?0x144:0x184,
+		(Player::Thirst()>1)?0x145:0x185,
+		(Player::Thirst()>2)?0x145:0x185,
+		(Player::Thirst()>3)?0x145:0x185,
+		(Player::Thirst()>4)?0x145:0x185,
+		(Player::Thirst()>5)?0x145:0x185,
+		(Player::Thirst()>6)?0x146:0x186
 	};
 
 	SDL_Surface* pSprWaterBar = AdSpriteManager::BuildSprite(
@@ -218,55 +340,67 @@ void AdGameProc::Render(void) {
 
 	/* TopBarGUI - Number of Cogs */
 
-	SDL_Surface* pSprCogNum = AdSpriteManager::BuildSprite("100");
+	sprintf(tempStr, "%03d", Player::m_iCogs);
+	SDL_Surface* pSprCogNum = AdSpriteManager::BuildSprite(tempStr);
 	pnt.x = 188, pnt.y = 12;
 	AdScreen::DrawSprite(pnt, pSprCogNum);
 	SDL_FreeSurface(pSprCogNum);
 
 	/* TopBarGUI - Number of Wrenches */
 
-	SDL_Surface* pSprWrenchNum = AdSpriteManager::BuildSprite("100");
+	sprintf(tempStr, "%03d", Player::m_iWrenches);
+	SDL_Surface* pSprWrenchNum = AdSpriteManager::BuildSprite(tempStr);
 	pnt.x = 188, pnt.y = 24;
 	AdScreen::DrawSprite(pnt, pSprWrenchNum);
 	SDL_FreeSurface(pSprWrenchNum);
 
 	/* TopBarGUI - Number of Springs */
 
-	SDL_Surface* pSprSpringNum = AdSpriteManager::BuildSprite("100");
+	sprintf(tempStr, "%03d", Player::m_iSprings);
+	SDL_Surface* pSprSpringNum = AdSpriteManager::BuildSprite(tempStr);
 	pnt.x = 188, pnt.y = 36;
 	AdScreen::DrawSprite(pnt, pSprSpringNum);
 	SDL_FreeSurface(pSprSpringNum);
 
 	/* TopBarGUI - Number of Drill Bits */
 
-	SDL_Surface* pSprDrillBitNum = AdSpriteManager::BuildSprite("100");
+	sprintf(tempStr, "%03d", Player::m_iDrillBits);
+	SDL_Surface* pSprDrillBitNum = AdSpriteManager::BuildSprite(tempStr);
 	pnt.x = 188+44, pnt.y = 12;
 	AdScreen::DrawSprite(pnt, pSprDrillBitNum);
 	SDL_FreeSurface(pSprDrillBitNum);
 
 	/* TopBarGUI - Number of Lenes */
 
-	SDL_Surface* pSprLensNum = AdSpriteManager::BuildSprite("100");
+	sprintf(tempStr, "%03d", Player::m_iLenses);
+	SDL_Surface* pSprLensNum = AdSpriteManager::BuildSprite(tempStr);
 	pnt.x = 188+44, pnt.y = 24;
 	AdScreen::DrawSprite(pnt, pSprLensNum);
 	SDL_FreeSurface(pSprLensNum);
 
 	/* TopBarGUI - Number of Torches */
 
-	SDL_Surface* pSprTorchNum = AdSpriteManager::BuildSprite("100");
+	sprintf(tempStr, "%03d", Player::m_iTorches);
+	SDL_Surface* pSprTorchNum = AdSpriteManager::BuildSprite(tempStr);
 	pnt.x = 188+44, pnt.y = 36;
 	AdScreen::DrawSprite(pnt, pSprTorchNum);
 	SDL_FreeSurface(pSprTorchNum);
 
 	/* TopBarGUI - Indicator: Elemental Damage */
 
-	int pIndUpArrow[]    = {0x10E};
-	int pIndDownArrow[]  = {0x10F};
-	int pIndLeftArrow[]  = {0x110};
-	int pIndRightArrow[] = {0x111};
+	int pIndArrow[1];
+	if(Player::m_iElementalType == 0) {
+		pIndArrow[0] = 0x10E;
+	} else if(Player::m_iElementalType == 1) {
+		pIndArrow[0] = 0x10F;
+	} else if(Player::m_iElementalType == 2) {
+		pIndArrow[0] = 0x110;
+	} else {
+		pIndArrow[0] = 0x111;
+	}
 
 	SDL_Surface* pSprArrow = AdSpriteManager::BuildSprite(
-		1, 1, pIndUpArrow
+		1, 1, pIndArrow
 	);
 	pnt.x = 282, pnt.y = 24;
 	AdScreen::DrawSprite(pnt, pSprArrow);
