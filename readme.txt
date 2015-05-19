@@ -14,6 +14,8 @@ DESIGN:
 - upgrades
 	- craftable item which can be used to upgrade turrets and missles
 - grenades
+- meditation changes the elemental damage of your attacks?
+- each heart is broken up in thirds
 
 TECH:
 - SDL2 renderer

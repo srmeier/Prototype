@@ -63,7 +63,7 @@ void AdScreen::Clear(void) {
 }
 
 //-----------------------------------------------------------------------------
-void AdScreen::Render(void) {
+void AdScreen::Present(void) {
 	int pitch;
 	void* pixels;
 
@@ -113,6 +113,8 @@ void AdScreen::Render(void) {
 
 //-----------------------------------------------------------------------------
 void AdScreen::DrawSprite(SDL_Point pntLoc, SDL_Surface* pSprite) {
+	if(pSprite == NULL) return;
+
 	SDL_Rect rect = {pntLoc.x, pntLoc.y, pSprite->w, pSprite->h};
 	SDL_BlitSurface(pSprite, NULL, s_pScreen, &rect);
 }

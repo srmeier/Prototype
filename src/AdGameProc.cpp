@@ -130,6 +130,23 @@ void AdGameProc::Init(void) {
 	rect.x = 176+44, rect.y = 36;
 	SDL_BlitSurface(pSprTorch, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprTorch);
+
+	/* TopBarGUI - Indicator: Elemental Damage */
+
+	int pIndElemDamage[] = {
+		0x10A,0x10B,0x10C,0x10D,
+		0x14A,0x14B,0x14C,0x14D,
+		0x18A,0x18B,0x18C,0x18D,
+		0x1CA,0x1CB,0x1CC,0x1CD
+	};
+
+	SDL_Surface* pSprElemDamage = AdSpriteManager::BuildSprite(
+		4, 4, pIndElemDamage
+	);
+
+	rect.x = 270, rect.y = 12;
+	SDL_BlitSurface(pSprElemDamage, NULL, m_pTopBarGUI, &rect);
+	SDL_FreeSurface(pSprElemDamage);
 }
 
 //-----------------------------------------------------------------------------
@@ -240,4 +257,18 @@ void AdGameProc::Render(void) {
 	pnt.x = 188+44, pnt.y = 36;
 	AdScreen::DrawSprite(pnt, pSprTorchNum);
 	SDL_FreeSurface(pSprTorchNum);
+
+	/* TopBarGUI - Indicator: Elemental Damage */
+
+	int pIndUpArrow[]    = {0x10E};
+	int pIndDownArrow[]  = {0x10F};
+	int pIndLeftArrow[]  = {0x110};
+	int pIndRightArrow[] = {0x111};
+
+	SDL_Surface* pSprArrow = AdSpriteManager::BuildSprite(
+		1, 1, pIndUpArrow
+	);
+	pnt.x = 282, pnt.y = 24;
+	AdScreen::DrawSprite(pnt, pSprArrow);
+	SDL_FreeSurface(pSprArrow);
 }
