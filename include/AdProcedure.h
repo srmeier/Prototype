@@ -5,6 +5,9 @@
 
 //-----------------------------------------------------------------------------
 class AdProcedure: AdBase {
+protected:
+	class AdInput* m_pInput;
+
 public:
 	virtual void Init(void);
 	virtual void Quit(void);

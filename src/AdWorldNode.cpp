@@ -1,6 +1,7 @@
 /*
 */
 
+#include "Player.h"
 #include "AdScreen.h"
 #include "AdWorldNode.h"
 
@@ -37,10 +38,14 @@ void AdWorldNode::Quit(void) {
 }
 
 //-----------------------------------------------------------------------------
-void AdWorldNode::Update(void) {}
+void AdWorldNode::Update(class AdInput* pInput) {
+	Player::Update();
+}
 
 //-----------------------------------------------------------------------------
 void AdWorldNode::Render(SDL_Point pnt) {
 	AdScreen::DrawSprite(pnt, m_pBackground);
 	AdScreen::DrawSprite(pnt, m_pForeground);
+
+	Player::Render(pnt);
 }

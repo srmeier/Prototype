@@ -1,8 +1,17 @@
 /*
-- need to move the keyboard events out of into a boolean "input" structure type
-	thing and pass this structure around to everyone who needs it withing this
-	procedure. Perhaps the node should take case of collision and updating the
-	player's position
+//-----------------------------------------------------------------------------
+// TODO
+//-----------------------------------------------------------------------------
+- 
+
+//-----------------------------------------------------------------------------
+// DESIGN DECISIONS
+//-----------------------------------------------------------------------------
+- the game procedure can take care of all user input. This is because all other
+	types of procedures which do not have overworlds and node will need to
+	manage user input directly.
+- the node controls player updating and collision. this also allows a node to
+	prevent player movement during a "cutscene"
 */
 
 #include "AdBase.h"
@@ -15,8 +24,9 @@
 
 //-----------------------------------------------------------------------------
 int SDL_main(int argc, char* argv[]) {
-	if(AdBase::Init(320, 240, 3) == false) {
-		fprintf(stderr, "ERROR: Failed to initiate.");
+	if(AdBase::Init(320, 240, 2) == false) {
+		fprintf(stderr, "ERROR: Failed to initiate.\n");
+		system("pause");
 		return -1;
 	}
 

@@ -10,7 +10,7 @@ public:
 	void Quit(void);
 
 public:
-	void Update(void);
+	void Update(class AdInput* pInput);
 	void Render(SDL_Point pnt);
 
 public:

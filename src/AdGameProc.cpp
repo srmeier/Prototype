@@ -28,9 +28,9 @@ void AdGameProc::Init(void) {
 	Player::m_iDrillBits     = 98;
 	Player::m_iElementalType = 0;
 
-	while(Player::Health()!=12) Player::RestoreHealth();
-	while(Player::Hunger()!= 7) Player::RestoreHunger();
-	while(Player::Thirst()!= 7) Player::RestoreThirst();
+	while(Player::Health()!= 12) Player::RestoreHealth();
+	while(Player::Hunger()!=  7) Player::RestoreHunger();
+	while(Player::Thirst()!=  7) Player::RestoreThirst();
 
 	m_pOverworld->Init();
 	
@@ -180,42 +180,9 @@ void AdGameProc::Quit(void) {
 
 //-----------------------------------------------------------------------------
 void AdGameProc::Update(SDL_Event* sdlEvent) {
-	switch(sdlEvent->type) {
-		case SDL_KEYDOWN: {
-			switch(sdlEvent->key.keysym.sym) {
-				case SDLK_ESCAPE: {
-					exit(0);
-				} break;
-
-				case SDLK_UP: {
-					Player::m_pntPosition.y--;
-				} break;
-
-				case SDLK_DOWN: {
-					Player::m_pntPosition.y++;
-				} break;
-
-				case SDLK_LEFT: {
-					Player::m_pntPosition.x--;
-				} break;
-
-				case SDLK_RIGHT: {
-					Player::m_pntPosition.x++;
-				} break;
-			}
-		} break;
-		
-		case SDL_KEYUP: {
-			switch(sdlEvent->key.keysym.sym) {
-				case SDLK_UP: break;
-				case SDLK_DOWN: break;
-				case SDLK_LEFT: break;
-				case SDLK_RIGHT: break;
-			}
-		} break;
-	}
-
-	m_pOverworld->Update();
+	AdProcedure::Update(sdlEvent);
+	
+	m_pOverworld->Update(m_pInput);
 }
 
 //-----------------------------------------------------------------------------

@@ -15,7 +15,7 @@ public:
 	virtual void Quit(void);
 
 public:
-	virtual void Update(void);
+	virtual void Update(class AdInput* pInput);
 	virtual void Render(SDL_Point pnt);
 
 public:

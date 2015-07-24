@@ -21,7 +21,7 @@ void AdOverworld::Init(void) {}
 void AdOverworld::Quit(void) {}
 
 //-----------------------------------------------------------------------------
-void AdOverworld::Update(void) {}
+void AdOverworld::Update(class AdInput* pInput) {}
 
 //-----------------------------------------------------------------------------
 void AdOverworld::Render(void) {}

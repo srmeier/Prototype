@@ -31,14 +31,14 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	/* === */
 
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-		fprintf(stderr, SDL_GetError());
+		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
 	}
 
 	/* === */
 
 	if(TTF_Init() == -1) {
-		fprintf(stderr, TTF_GetError());
+		fprintf(stderr, "%s\n", TTF_GetError());
 		return false;
 	}
 
@@ -47,7 +47,7 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	int flags = IMG_INIT_JPG|IMG_INIT_PNG;
 
 	if((IMG_Init(flags)&flags) != flags) {
-		fprintf(stderr, IMG_GetError());
+		fprintf(stderr, "%s\n", IMG_GetError());
 		return false;
 	}
 
@@ -56,14 +56,14 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	flags = MIX_INIT_OGG|MIX_INIT_MP3;
 
 	if((Mix_Init(flags)&flags) != flags) {
-		fprintf(stderr, Mix_GetError());
+		fprintf(stderr, "%s\n", Mix_GetError());
 		return false;
 	}
 
 	/* === */
 
 	if(SDLNet_Init() == -1) {
-		fprintf(stderr, SDLNet_GetError());
+		fprintf(stderr, "%s\n", SDLNet_GetError());
 		return false;
 	}
 
@@ -79,7 +79,7 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	);
 
 	if(s_pWindow == NULL) {
-		fprintf(stderr, SDL_GetError());
+		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
 	}
 
@@ -92,7 +92,7 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	);
 
 	if(s_pRenderer == NULL) {
-		fprintf(stderr, SDL_GetError());
+		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
 	}
 

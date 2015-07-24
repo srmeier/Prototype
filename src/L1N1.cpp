@@ -1,8 +1,11 @@
 /*
 */
 
-#include "nodes/L1N1.h"
+#include "Player.h"
+#include "AdInput.h"
 #include "AdSpriteManager.h"
+
+#include "nodes/L1N1.h"
 
 //-----------------------------------------------------------------------------
 L1N1::L1N1(void) {}
@@ -56,8 +59,24 @@ void L1N1::Quit(void) {
 }
 
 //-----------------------------------------------------------------------------
-void L1N1::Update(void) {
-	AdWorldNode::Update();
+void L1N1::Update(class AdInput* pInput) {
+	AdWorldNode::Update(pInput);
+
+	if(pInput->m_bUp) {
+		Player::m_pntPosition.y--;
+	}
+
+	if(pInput->m_bDown) {
+		Player::m_pntPosition.y++;
+	}
+
+	if(pInput->m_bLeft) {
+		Player::m_pntPosition.x--;
+	}
+
+	if(pInput->m_bRight) {
+		Player::m_pntPosition.x++;
+	}
 }
 
 //-----------------------------------------------------------------------------

@@ -83,7 +83,7 @@ SDL_Surface* AdSpriteManager::BuildSprite(int iWidth, int iHeight, int pIndices[
 SDL_Surface* AdSpriteManager::BuildSprite(const char* pString) {
 	if(pString == NULL) return NULL;
 
-	int iStrLen = strlen(pString);
+	int iStrLen = (int) strlen(pString);
 
 	SDL_Surface* pSprite = NULL;
 	pSprite = SDL_CreateRGBSurface(
