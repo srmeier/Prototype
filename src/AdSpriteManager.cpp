@@ -99,78 +99,43 @@ SDL_Surface* AdSpriteManager::BuildSprite(const char* pString) {
 		SDL_Rect rect = {0, 0, s_iSprWidth, s_iSprHeight};
 
 		int iIndex = 0x00;
-		if(pString[i]=='A') {
-			iIndex = 0x01;
-		} else if(pString[i]=='B') {
-			iIndex = 0x02;
-		} else if(pString[i]=='C') {
-			iIndex = 0x03;
-		} else if(pString[i]=='D') {
-			iIndex = 0x04;
-		} else if(pString[i]=='E') {
-			iIndex = 0x05;
-		} else if(pString[i]=='F') {
-			iIndex = 0x06;
-		} else if(pString[i]=='G') {
-			iIndex = 0x07;
-		} else if(pString[i]=='H') {
-			iIndex = 0x08;
-		} else if(pString[i]=='I') {
-			iIndex = 0x09;
-		} else if(pString[i]=='J') {
-			iIndex = 0x0A;
-		} else if(pString[i]=='K') {
-			iIndex = 0x0B;
-		} else if(pString[i]=='L') {
-			iIndex = 0x0C;
-		} else if(pString[i]=='M') {
-			iIndex = 0x0D;
-		} else if(pString[i]=='N') {
-			iIndex = 0x0E;
-		} else if(pString[i]=='O') {
-			iIndex = 0x0F;
-		} else if(pString[i]=='P') {
-			iIndex = 0x10;
-		} else if(pString[i]=='Q') {
-			iIndex = 0x11;
-		} else if(pString[i]=='R') {
-			iIndex = 0x12;
-		} else if(pString[i]=='S') {
-			iIndex = 0x13;
-		} else if(pString[i]=='T') {
-			iIndex = 0x14;
-		} else if(pString[i]=='U') {
-			iIndex = 0x15;
-		} else if(pString[i]=='V') {
-			iIndex = 0x16;
-		} else if(pString[i]=='W') {
-			iIndex = 0x17;
-		} else if(pString[i]=='X') {
-			iIndex = 0x18;
-		} else if(pString[i]=='Y') {
-			iIndex = 0x19;
-		} else if(pString[i]=='Z') {
-			iIndex = 0x1A;
-		} else if(pString[i]=='0') {
-			iIndex = 0x1B;
-		} else if(pString[i]=='1') {
-			iIndex = 0x1C;
-		} else if(pString[i]=='2') {
-			iIndex = 0x1D;
-		} else if(pString[i]=='3') {
-			iIndex = 0x1E;
-		} else if(pString[i]=='4') {
-			iIndex = 0x1F;
-		} else if(pString[i]=='5') {
-			iIndex = 0x20;
-		} else if(pString[i]=='6') {
-			iIndex = 0x21;
-		} else if(pString[i]=='7') {
-			iIndex = 0x22;
-		} else if(pString[i]=='8') {
-			iIndex = 0x23;
-		} else if(pString[i]=='9') {
-			iIndex = 0x24;
+		switch(pString[i]) {
+			case 'A': iIndex = 0x01; break;
+			case 'B': iIndex = 0x02; break;
+			case 'C': iIndex = 0x03; break;
+			case 'D': iIndex = 0x04; break;
+			case 'E': iIndex = 0x05; break;
+			case 'F': iIndex = 0x06; break;
+			case 'G': iIndex = 0x07; break;
+			case 'H': iIndex = 0x08; break;
+			case 'I': iIndex = 0x09; break;
+			case 'J': iIndex = 0x0A; break;
+			case 'K': iIndex = 0x0B; break;
+			case 'L': iIndex = 0x0C; break;
+			case 'M': iIndex = 0x0D; break;
+			case 'N': iIndex = 0x0E; break;
+			case 'O': iIndex = 0x0F; break;
+			case 'P': iIndex = 0x10; break;
+			case 'Q': iIndex = 0x11; break;
+			case 'R': iIndex = 0x12; break;
+			case 'S': iIndex = 0x13; break;
+			case 'T': iIndex = 0x14; break;
+			case 'U': iIndex = 0x15; break;
+			case 'V': iIndex = 0x16; break;
+			case 'W': iIndex = 0x17; break;
+			case 'X': iIndex = 0x18; break;
+			case 'Y': iIndex = 0x19; break;
+			case 'Z': iIndex = 0x1A; break;
+			case '0': iIndex = 0x1B; break;
+			case '1': iIndex = 0x1C; break;
+			case '2': iIndex = 0x1D; break;
+			case '3': iIndex = 0x1E; break;
+			case '4': iIndex = 0x1F; break;
+			case '5': iIndex = 0x20; break;
+			case '6': iIndex = 0x21; break;
+			case '7': iIndex = 0x22; break;
+			case '8': iIndex = 0x23; break;
+			case '9': iIndex = 0x24; break;
 		}
 
 		rect.x = s_iSprWidth*i;

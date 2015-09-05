@@ -24,25 +24,17 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	s_iWinWidth  = iWidth;
 	s_iWinHeight = iHeight;
 
-	/* === */
-
 	srand((unsigned int) time(NULL));
-
-	/* === */
 
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
 	}
 
-	/* === */
-
 	if(TTF_Init() == -1) {
 		fprintf(stderr, "%s\n", TTF_GetError());
 		return false;
 	}
-
-	/* === */
 
 	int flags = IMG_INIT_JPG|IMG_INIT_PNG;
 
@@ -51,8 +43,6 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 		return false;
 	}
 
-	/* === */
-
 	flags = MIX_INIT_OGG|MIX_INIT_MP3;
 
 	if((Mix_Init(flags)&flags) != flags) {
@@ -60,14 +50,10 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 		return false;
 	}
 
-	/* === */
-
 	if(SDLNet_Init() == -1) {
 		fprintf(stderr, "%s\n", SDLNet_GetError());
 		return false;
 	}
-
-	/* === */
 
 	s_pWindow = SDL_CreateWindow(
 		"Prototype",
@@ -83,8 +69,6 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 		return false;
 	}
 
-	/* === */
-
 	s_pRenderer = SDL_CreateRenderer(
 		s_pWindow, -1,
 		SDL_RENDERER_ACCELERATED|
@@ -96,12 +80,8 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 		return false;
 	}
 
-	/* === */
-
 	if(AdScreen::Init() == false) return false;
 	if(AdSpriteManager::Init(8, 8, "data/spritesheet.bmp") == false) return false;
-
-	/* === */
 
 	s_pGameProc = new AdGameProc();
 
@@ -113,39 +93,24 @@ void AdBase::Quit(void) {
 	if(s_pActiveProc) s_pActiveProc->Quit();
 
 	delete s_pGameProc;
-
-	/* === */
+	s_pGameProc = NULL;
 
 	AdSpriteManager::Quit();
 	AdScreen::Quit();
 
-	/* === */
-
 	SDL_DestroyRenderer(s_pRenderer);
 	s_pRenderer = NULL;
-
-	/* === */
 
 	SDL_DestroyWindow(s_pWindow);
 	s_pWindow = NULL;
 
-	/* === */
-
 	SDLNet_Quit();
-
-	/* === */
 
 	Mix_Quit();
 
-	/* === */
-
 	IMG_Quit();
 
-	/* === */
-
 	TTF_Quit();
-
-	/* === */
 
 	SDL_Quit();
 }

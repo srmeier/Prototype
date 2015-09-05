@@ -34,7 +34,7 @@ void AdGameProc::Init(void) {
 
 	m_pOverworld->Init();
 	
-	/* TopBarGUI - Background */
+	// TopBarGUI - Background
 
 	int pTopBarGUIInds[] = {
 		0x800,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FF,0x7FE,
@@ -50,7 +50,7 @@ void AdGameProc::Init(void) {
 		40, 7, pTopBarGUIInds
 	);
 
-	/* TopBarGUI - A and B button labels */
+	// TopBarGUI - A and B button labels
 
 	SDL_Rect rect = {0, 0, 8, 8};
 	SDL_Surface* pSprABnt = AdSpriteManager::BuildSprite("A");
@@ -64,7 +64,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprBBnt, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprBBnt);
 
-	/* TopBarGUI - Hunger meat icon */
+	// TopBarGUI - Hunger meat icon
 
 	int pIndMeat[] = {0x101};
 	SDL_Surface* pSprMeat = AdSpriteManager::BuildSprite(
@@ -75,7 +75,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprMeat, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprMeat);
 
-	/* TopBarGUI - Thirst water icon */
+	// TopBarGUI - Thirst water icon
 
 	int pIndWater[] = {0x141};
 	SDL_Surface* pSprWater = AdSpriteManager::BuildSprite(
@@ -86,7 +86,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprWater, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprWater);
 
-	/* TopBarGUI - Resources: Cog */
+	// TopBarGUI - Resources: Cog
 
 	int pIndCog[] = {0x107};
 	SDL_Surface* pSprCog = AdSpriteManager::BuildSprite(
@@ -97,7 +97,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprCog, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprCog);
 
-	/* TopBarGUI - Resources: Wrench */
+	// TopBarGUI - Resources: Wrench
 
 	int pIndWrench[] = {0x108};
 	SDL_Surface* pSprWrench = AdSpriteManager::BuildSprite(
@@ -108,7 +108,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprWrench, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprWrench);
 
-	/* TopBarGUI - Resources: Spring */
+	// TopBarGUI - Resources: Spring
 
 	int pIndSpring[] = {0x109};
 	SDL_Surface* pSprSpring = AdSpriteManager::BuildSprite(
@@ -119,7 +119,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprSpring, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprSpring);
 
-	/* TopBarGUI - Resources: DrillBit */
+	// TopBarGUI - Resources: DrillBit
 
 	int pIndDrillBit[] = {0x147};
 	SDL_Surface* pSprDrillBit = AdSpriteManager::BuildSprite(
@@ -130,7 +130,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprDrillBit, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprDrillBit);
 
-	/* TopBarGUI - Resources: Lens */
+	// TopBarGUI - Resources: Lens
 
 	int pIndLens[] = {0x148};
 	SDL_Surface* pSprLens = AdSpriteManager::BuildSprite(
@@ -141,7 +141,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprLens, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprLens);
 
-	/* TopBarGUI - Resources: Torch */
+	// TopBarGUI - Resources: Torch
 
 	int pIndTorch[] = {0x149};
 	SDL_Surface* pSprTorch = AdSpriteManager::BuildSprite(
@@ -152,7 +152,7 @@ void AdGameProc::Init(void) {
 	SDL_BlitSurface(pSprTorch, NULL, m_pTopBarGUI, &rect);
 	SDL_FreeSurface(pSprTorch);
 
-	/* TopBarGUI - Indicator: Elemental Damage */
+	// TopBarGUI - Indicator: Elemental Damage
 
 	int pIndElemDamage[] = {
 		0x10A,0x10B,0x10C,0x10D,
@@ -189,13 +189,13 @@ void AdGameProc::Update(SDL_Event* sdlEvent) {
 void AdGameProc::Render(void) {
 	m_pOverworld->Render();
 
-	/* TopBarGUI - Background */
+	// TopBarGUI - Background
 
 	char tempStr[0x5];
 	SDL_Point pnt = {0, 0};
 	AdScreen::DrawSprite(pnt, m_pTopBarGUI);
 
-	/* TopBarGUI - Health */
+	// TopBarGUI - Health
 
 	int pIndHeart0[] = {
 		0x102,0x103,
@@ -265,7 +265,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprHeart);
 	SDL_FreeSurface(pSprHeart);
 
-	/* TopBarGUI - Hunger bar */
+	// TopBarGUI - Hunger bar
 
 	int pIndMeatBar[] = {
 		(Player::Hunger()>0)?0x104:0x184,
@@ -285,7 +285,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprMeatBar);
 	SDL_FreeSurface(pSprMeatBar);
 
-	/* TopBarGUI - Thirst bar */
+	// TopBarGUI - Thirst bar
 
 	int pIndWaterBar[] = {
 		(Player::Thirst()>0)?0x144:0x184,
@@ -305,7 +305,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprWaterBar);
 	SDL_FreeSurface(pSprWaterBar);
 
-	/* TopBarGUI - Number of Cogs */
+	// TopBarGUI - Number of Cogs
 
 	sprintf(tempStr, "%03d", Player::m_iCogs);
 	SDL_Surface* pSprCogNum = AdSpriteManager::BuildSprite(tempStr);
@@ -313,7 +313,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprCogNum);
 	SDL_FreeSurface(pSprCogNum);
 
-	/* TopBarGUI - Number of Wrenches */
+	// TopBarGUI - Number of Wrenches
 
 	sprintf(tempStr, "%03d", Player::m_iWrenches);
 	SDL_Surface* pSprWrenchNum = AdSpriteManager::BuildSprite(tempStr);
@@ -321,7 +321,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprWrenchNum);
 	SDL_FreeSurface(pSprWrenchNum);
 
-	/* TopBarGUI - Number of Springs */
+	// TopBarGUI - Number of Springs
 
 	sprintf(tempStr, "%03d", Player::m_iSprings);
 	SDL_Surface* pSprSpringNum = AdSpriteManager::BuildSprite(tempStr);
@@ -329,7 +329,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprSpringNum);
 	SDL_FreeSurface(pSprSpringNum);
 
-	/* TopBarGUI - Number of Drill Bits */
+	// TopBarGUI - Number of Drill Bits
 
 	sprintf(tempStr, "%03d", Player::m_iDrillBits);
 	SDL_Surface* pSprDrillBitNum = AdSpriteManager::BuildSprite(tempStr);
@@ -337,7 +337,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprDrillBitNum);
 	SDL_FreeSurface(pSprDrillBitNum);
 
-	/* TopBarGUI - Number of Lenes */
+	// TopBarGUI - Number of Lenes
 
 	sprintf(tempStr, "%03d", Player::m_iLenses);
 	SDL_Surface* pSprLensNum = AdSpriteManager::BuildSprite(tempStr);
@@ -345,7 +345,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprLensNum);
 	SDL_FreeSurface(pSprLensNum);
 
-	/* TopBarGUI - Number of Torches */
+	// TopBarGUI - Number of Torches
 
 	sprintf(tempStr, "%03d", Player::m_iTorches);
 	SDL_Surface* pSprTorchNum = AdSpriteManager::BuildSprite(tempStr);
@@ -353,7 +353,7 @@ void AdGameProc::Render(void) {
 	AdScreen::DrawSprite(pnt, pSprTorchNum);
 	SDL_FreeSurface(pSprTorchNum);
 
-	/* TopBarGUI - Indicator: Elemental Damage */
+	// TopBarGUI - Indicator: Elemental Damage
 
 	int pIndArrow[1];
 	if(Player::m_iElementalType == 0) {

@@ -1,3 +1,9 @@
+STORY:
+- peppered with short stories about some of the NPCs
+- NPCs do things which correlate with the writing which may not
+	hold significance without the written parts
+	- 'finding significance in things we wouldn't find significant at all'
+
 DESIGN:
 - 2D
 - resource managment game

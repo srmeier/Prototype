@@ -27,8 +27,6 @@ bool AdScreen::Init(void) {
 		return false;
 	}
 
-	/* === */
-
 	s_pTexture = SDL_CreateTexture(
 		AdBase::GetRenderer(),
 		SDL_PIXELFORMAT_RGBA8888,
@@ -49,8 +47,6 @@ bool AdScreen::Init(void) {
 void AdScreen::Quit(void) {
 	SDL_DestroyTexture(s_pTexture);
 	s_pTexture = NULL;
-
-	/* === */
 
 	SDL_FreeSurface(s_pScreen);
 	s_pScreen = NULL;
@@ -83,8 +79,6 @@ void AdScreen::Present(void) {
 
 	SDL_RenderCopy(AdBase::GetRenderer(), s_pTexture, NULL, NULL);
 	SDL_RenderPresent(AdBase::GetRenderer());
-
-	/* === */
 
 	s_iFrames++;
 

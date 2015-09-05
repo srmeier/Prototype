@@ -24,17 +24,13 @@
 
 //-----------------------------------------------------------------------------
 int SDL_main(int argc, char* argv[]) {
-	if(AdBase::Init(320, 240, 2) == false) {
+	if(AdBase::Init(320, 240, 3) == false) {
 		fprintf(stderr, "ERROR: Failed to initiate.\n");
 		system("pause");
 		return -1;
 	}
 
-	/* === */
-
 	AdBase::SetActiveProc(AdBase::s_pGameProc);
-
-	/* === */
 
 	SDL_Event sdlEvent = {};
 	while(sdlEvent.type != SDL_QUIT) {
@@ -52,21 +48,13 @@ int SDL_main(int argc, char* argv[]) {
 			isDown = false;
 		}
 
-		/* === */
-
 		AdScreen::Clear();
-
-		/* === */
 
 		AdBase::Update(&sdlEvent);
 		AdBase::Render();
 
-		/* === */
-
 		AdScreen::Present();
-	}	
-
-	/* === */
+	}
 
 	AdBase::Quit();
 
