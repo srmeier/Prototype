@@ -12,6 +12,8 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
 
+#define WINDOW_TITLE "Prototype"
+
 //-----------------------------------------------------------------------------
 class AdBase {
 private:

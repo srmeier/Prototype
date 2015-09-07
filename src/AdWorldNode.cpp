@@ -38,9 +38,7 @@ void AdWorldNode::Quit(void) {
 }
 
 //-----------------------------------------------------------------------------
-void AdWorldNode::Update(class AdInput* pInput) {
-	Player::Update();
-}
+void AdWorldNode::Update(class AdInput* pInput) {}
 
 //-----------------------------------------------------------------------------
 void AdWorldNode::Render(SDL_Point pnt) {

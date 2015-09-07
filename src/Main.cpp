@@ -2,12 +2,23 @@
 //-----------------------------------------------------------------------------
 // TODO
 //-----------------------------------------------------------------------------
-- 
+- need an relatively abstract way of handling collisions at the node level
+	- get a basic level with collision up and running and then form the
+		abstraction based off that level
+- maybe the point for drawing the world node should be set in the world node
+	class since it doesn't really need to change ever
+	- since the level/world handles the GUI and the offset depends on the GUI
+		I'll leave it the way it is for now
+- the nodeX and nodeY integers may need to be handled a special way if the
+	player will be entering from multiple pathways
 
 //-----------------------------------------------------------------------------
 // DESIGN DECISIONS
 //-----------------------------------------------------------------------------
-- the game procedure can take care of all user input. This is because all other
+- each level is it's own overworld. if you have a level above ground and
+	another below ground each would have its own class inheriting from
+	AdOverworld
+- the game procedure can take care of all user input. this is because all other
 	types of procedures which do not have overworlds and node will need to
 	manage user input directly.
 - the node controls player updating and collision. this also allows a node to
@@ -42,9 +53,7 @@ int SDL_main(int argc, char* argv[]) {
 			Player::DamageHealth();
 			Player::DamageHunger();
 			Player::DamageThirst();
-		}
-
-		if(sdlEvent.type == SDL_KEYUP && isDown) {
+		} else if(sdlEvent.type == SDL_KEYUP && isDown) {
 			isDown = false;
 		}
 

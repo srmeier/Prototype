@@ -4,9 +4,11 @@
 //-----------------------------------------------------------------------------
 class AdOverworld {
 protected:
-	int                 m_iNodeX;
-	int                 m_iNodeY;
-	class AdWorldNode** m_pNodes;
+	int                  m_iNX;
+	int                  m_iNY;
+	int                  m_iNTotX;
+	int                  m_iNTotY;
+	class AdWorldNode*** m_pNodes;
 
 public:
 	virtual void Init(void);

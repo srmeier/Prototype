@@ -6,8 +6,8 @@
 
 //-----------------------------------------------------------------------------
 AdOverworld::AdOverworld(void) {
-	m_iNodeX = 0;
-	m_iNodeY = 0;
+	m_iNX    = 0; m_iNY    = 0;
+	m_iNTotX = 0; m_iNTotY = 0;
 	m_pNodes = NULL;
 }
 

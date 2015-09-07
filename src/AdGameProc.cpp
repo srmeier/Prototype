@@ -180,6 +180,7 @@ void AdGameProc::Quit(void) {
 
 //-----------------------------------------------------------------------------
 void AdGameProc::Update(SDL_Event* sdlEvent) {
+	// NOTE: generic processing of inputs and sets the user's input
 	AdProcedure::Update(sdlEvent);
 	
 	m_pOverworld->Update(m_pInput);

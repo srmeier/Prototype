@@ -4,7 +4,7 @@
 #include "AdOverworld.h"
 
 //-----------------------------------------------------------------------------
-class LevelOne:public AdOverworld {
+class LevelOne: public AdOverworld {
 public:
 	void Init(void);
 	void Quit(void);

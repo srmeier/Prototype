@@ -4,7 +4,7 @@
 #include "AdWorldNode.h"
 
 //-----------------------------------------------------------------------------
-class L1N1:public AdWorldNode {
+class L1N1: public AdWorldNode {
 public:
 	void Init(void);
 	void Quit(void);

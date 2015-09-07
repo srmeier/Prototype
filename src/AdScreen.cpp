@@ -98,7 +98,10 @@ void AdScreen::Present(void) {
 	s_uiLastCount = s_uiCurrentCount;
 
 	if(s_fTotTime >= 1.0f) {
-		printf("FPS: %d\n", s_iFrames);
+		char strTitle[0x20] = "";
+		sprintf(strTitle, "%s, FPS: %d", WINDOW_TITLE, s_iFrames);
+
+		SDL_SetWindowTitle(AdBase::GetWindow(), strTitle);
 
 		s_fTotTime  = 0;
 		s_iFrames = 0;

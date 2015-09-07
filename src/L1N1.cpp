@@ -62,21 +62,13 @@ void L1N1::Quit(void) {
 void L1N1::Update(class AdInput* pInput) {
 	AdWorldNode::Update(pInput);
 
-	if(pInput->m_bUp) {
-		Player::m_pntPosition.y--;
-	}
+	Player::Update();
+	if(pInput->m_bUp)    Player::m_pntPosition.y--;
+	if(pInput->m_bDown)  Player::m_pntPosition.y++;
+	if(pInput->m_bLeft)  Player::m_pntPosition.x--;
+	if(pInput->m_bRight) Player::m_pntPosition.x++;
 
-	if(pInput->m_bDown) {
-		Player::m_pntPosition.y++;
-	}
-
-	if(pInput->m_bLeft) {
-		Player::m_pntPosition.x--;
-	}
-
-	if(pInput->m_bRight) {
-		Player::m_pntPosition.x++;
-	}
+	// TODO: implement a basic collision system
 }
 
 //-----------------------------------------------------------------------------

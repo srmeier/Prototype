@@ -56,7 +56,7 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	}
 
 	s_pWindow = SDL_CreateWindow(
-		"Prototype",
+		WINDOW_TITLE,
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		s_iWinScale*s_iWinWidth,
