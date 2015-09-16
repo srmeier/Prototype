@@ -22,7 +22,7 @@ public:
 	static int m_iElementalType;
 
 public:
-	static SDL_Point m_pntPosition;
+	static SDL_Rect m_pntPosition;
 
 public:
 	static int Health(void) {return m_iHealth;}
@@ -38,6 +38,8 @@ public:
 	static void RestoreThirst(void) {if(m_iThirst<= 6) m_iThirst++;}
 
 public:
+	static void Init(void);
+	static void Quit(void);
 	static void Update(void);
 	static void Render(SDL_Point pntOffset);
 };

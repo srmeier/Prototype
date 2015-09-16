@@ -19,7 +19,13 @@ int       Player::m_iDrillBits;
 
 int       Player::m_iElementalType;
 
-SDL_Point Player::m_pntPosition;
+SDL_Rect  Player::m_pntPosition = {0, 0, 16, 16};
+
+//-----------------------------------------------------------------------------
+void Player::Init(void) {}
+
+//-----------------------------------------------------------------------------
+void Player::Quit(void) {}
 
 //-----------------------------------------------------------------------------
 void Player::Update(void) {}
@@ -27,11 +33,12 @@ void Player::Update(void) {}
 //-----------------------------------------------------------------------------
 void Player::Render(SDL_Point pntOffset) {
 	int pInd[] = {
-		0x141
+		0x141,0x141,
+		0x141,0x141
 	};
 
 	SDL_Surface* pSprite = AdSpriteManager::BuildSprite(
-		1, 1, pInd
+		2, 2, pInd
 	);
 
 	pntOffset.x += m_pntPosition.x;

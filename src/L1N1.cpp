@@ -69,6 +69,7 @@ void L1N1::Update(class AdInput* pInput) {
 	if(pInput->m_bRight) Player::m_pntPosition.x++;
 
 	// TODO: implement a basic collision system
+	
 }
 
 //-----------------------------------------------------------------------------

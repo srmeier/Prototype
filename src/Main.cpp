@@ -11,6 +11,7 @@
 		I'll leave it the way it is for now
 - the nodeX and nodeY integers may need to be handled a special way if the
 	player will be entering from multiple pathways
+- maybe make the player's sprite persistent
 
 //-----------------------------------------------------------------------------
 // DESIGN DECISIONS
@@ -47,6 +48,7 @@ int SDL_main(int argc, char* argv[]) {
 	while(sdlEvent.type != SDL_QUIT) {
 		SDL_PollEvent(&sdlEvent);
 
+		/*
 		static bool isDown = false;
 		if(sdlEvent.type == SDL_KEYDOWN && !isDown) {
 			isDown = true;
@@ -56,6 +58,7 @@ int SDL_main(int argc, char* argv[]) {
 		} else if(sdlEvent.type == SDL_KEYUP && isDown) {
 			isDown = false;
 		}
+		*/
 
 		AdScreen::Clear();
 
