@@ -17,17 +17,13 @@
 //-----------------------------------------------------------------------------
 class AdBase {
 private:
-	static SDL_Window*        s_pWindow;
-	static SDL_Renderer*      s_pRenderer;
+	static SDL_Window*   s_pWindow;
+	static SDL_Renderer* s_pRenderer;
 
 public:
-	static int                s_iWinScale;
-	static int                s_iWinWidth;
-	static int                s_iWinHeight;
-	static class AdProcedure* s_pActiveProc;
-
-public:
-	static class AdProcedure* s_pGameProc;
+	static int s_iWinScale;
+	static int s_iWinWidth;
+	static int s_iWinHeight;
 
 public:
 	static bool Init(int iWidth, int iHeight, int iScale);
@@ -40,7 +36,6 @@ public:
 public:
 	static SDL_Window*   GetWindow(void) {return s_pWindow;}
 	static SDL_Renderer* GetRenderer(void) {return s_pRenderer;}
-	static void          SetActiveProc(class AdProcedure* pProc);
 };
 
 #endif

@@ -86,36 +86,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\AdBase.cpp" />
-    <ClCompile Include="src\AdGameProc.cpp" />
-    <ClCompile Include="src\AdInput.cpp" />
-    <ClCompile Include="src\AdOverworld.cpp" />
-    <ClCompile Include="src\AdProcedure.cpp" />
     <ClCompile Include="src\AdScreen.cpp" />
     <ClCompile Include="src\AdSpriteManager.cpp" />
-    <ClCompile Include="src\AdWorldNode.cpp" />
     <ClCompile Include="src\Duktape.cpp" />
-    <ClCompile Include="src\L1N1.cpp" />
-    <ClCompile Include="src\LevelOne.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AdBase.h" />
-    <ClInclude Include="include\AdGameProc.h" />
-    <ClInclude Include="include\AdInput.h" />
-    <ClInclude Include="include\AdOverworld.h" />
-    <ClInclude Include="include\AdProcedure.h" />
     <ClInclude Include="include\AdScreen.h" />
     <ClInclude Include="include\AdSpriteManager.h" />
-    <ClInclude Include="include\AdWorldNode.h" />
     <ClInclude Include="include\DukConfig.h" />
     <ClInclude Include="include\Duktape.h" />
-    <ClInclude Include="include\levels\LevelOne.h" />
-    <ClInclude Include="include\nodes\L1N1.h" />
-    <ClInclude Include="include\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

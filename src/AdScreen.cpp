@@ -4,13 +4,13 @@
 #include "AdScreen.h"
 
 //-----------------------------------------------------------------------------
-int          AdScreen::s_iFrames;
-float        AdScreen::s_fTotTime;
-uint64_t     AdScreen::s_uiLastCount;
-uint64_t     AdScreen::s_uiDiffCount;
-uint64_t     AdScreen::s_uiCountFreq;
-float        AdScreen::s_fElapsedTime;
-uint64_t     AdScreen::s_uiCurrentCount;
+int      AdScreen::s_iFrames;
+float    AdScreen::s_fTotTime;
+uint64_t AdScreen::s_uiLastCount;
+uint64_t AdScreen::s_uiDiffCount;
+uint64_t AdScreen::s_uiCountFreq;
+float    AdScreen::s_fElapsedTime;
+uint64_t AdScreen::s_uiCurrentCount;
 
 SDL_Surface* AdScreen::s_pScreen;
 SDL_Texture* AdScreen::s_pTexture;

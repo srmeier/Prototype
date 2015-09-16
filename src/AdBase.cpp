@@ -3,20 +3,15 @@
 
 #include "AdBase.h"
 #include "AdScreen.h"
-#include "AdGameProc.h"
-#include "AdProcedure.h"
 #include "AdSpriteManager.h"
 
 //-----------------------------------------------------------------------------
-SDL_Window*        AdBase::s_pWindow;
-SDL_Renderer*      AdBase::s_pRenderer;
+SDL_Window*   AdBase::s_pWindow;
+SDL_Renderer* AdBase::s_pRenderer;
 
-int                AdBase::s_iWinScale;
-int                AdBase::s_iWinWidth;
-int                AdBase::s_iWinHeight;
-class AdProcedure* AdBase::s_pActiveProc;
-
-class AdProcedure* AdBase::s_pGameProc;
+int AdBase::s_iWinScale;
+int AdBase::s_iWinWidth;
+int AdBase::s_iWinHeight;
 
 //-----------------------------------------------------------------------------
 bool AdBase::Init(int iWidth, int iHeight, int iScale) {
@@ -83,18 +78,11 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	if(AdScreen::Init() == false) return false;
 	if(AdSpriteManager::Init(8, 8, "data/spritesheet.bmp") == false) return false;
 
-	s_pGameProc = new AdGameProc();
-
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 void AdBase::Quit(void) {
-	if(s_pActiveProc) s_pActiveProc->Quit();
-
-	delete s_pGameProc;
-	s_pGameProc = NULL;
-
 	AdSpriteManager::Quit();
 	AdScreen::Quit();
 
@@ -116,21 +104,7 @@ void AdBase::Quit(void) {
 }
 
 //-----------------------------------------------------------------------------
-void AdBase::Update(SDL_Event* sdlEvent) {
-	if(s_pActiveProc) s_pActiveProc->Update(sdlEvent);
-}
+void AdBase::Update(SDL_Event* sdlEvent) {}
 
 //-----------------------------------------------------------------------------
-void AdBase::Render(void) {
-	if(s_pActiveProc) s_pActiveProc->Render();
-}
-
-//-----------------------------------------------------------------------------
-void AdBase::SetActiveProc(class AdProcedure* pProc) {
-	if(pProc == NULL) return;
-	else pProc->Init();
-
-	if(s_pActiveProc) s_pActiveProc->Quit();
-
-	s_pActiveProc = pProc;
-}
+void AdBase::Render(void) {}
