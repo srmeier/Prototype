@@ -120,7 +120,7 @@
  * typedefs and macros, and DUK_USE_xxx config options so that
  * the rest of Duktape doesn't need to do any feature detection.
  */
-#include "duk_config.h"
+#include "DukConfig.h"
 
 /*
  *  BEGIN PUBLIC API
