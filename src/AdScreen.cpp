@@ -28,7 +28,7 @@ bool AdScreen::Init(void) {
 	}
 
 	s_pTexture = SDL_CreateTexture(
-		AdBase::GetRenderer(),
+		GetRenderer(),
 		SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STREAMING,
 		s_pScreen->w,
@@ -54,7 +54,7 @@ void AdScreen::Quit(void) {
 
 //-----------------------------------------------------------------------------
 void AdScreen::Clear(void) {
-	SDL_RenderClear(AdBase::GetRenderer());
+	SDL_RenderClear(GetRenderer());
 	SDL_FillRect(s_pScreen, NULL, 0x00000000);
 }
 
@@ -77,8 +77,8 @@ void AdScreen::Present(void) {
 
 	SDL_UnlockTexture(s_pTexture);
 
-	SDL_RenderCopy(AdBase::GetRenderer(), s_pTexture, NULL, NULL);
-	SDL_RenderPresent(AdBase::GetRenderer());
+	SDL_RenderCopy(GetRenderer(), s_pTexture, NULL, NULL);
+	SDL_RenderPresent(GetRenderer());
 
 	s_iFrames++;
 
@@ -101,7 +101,7 @@ void AdScreen::Present(void) {
 		char strTitle[0x20] = "";
 		sprintf(strTitle, "%s, FPS: %d", WINDOW_TITLE, s_iFrames);
 
-		SDL_SetWindowTitle(AdBase::GetWindow(), strTitle);
+		SDL_SetWindowTitle(GetWindow(), strTitle);
 
 		s_fTotTime  = 0;
 		s_iFrames = 0;

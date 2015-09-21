@@ -19,13 +19,23 @@
 //-----------------------------------------------------------------------------
 class AdBase {
 private:
+	static duk_context*  s_pJSCtx;
 	static SDL_Window*   s_pWindow;
 	static SDL_Renderer* s_pRenderer;
 
+protected:
+	static int             s_iWinScale;
+	static int             s_iWinWidth;
+	static int             s_iWinHeight;
+	static class AdPlayer* s_pPlayer;
+
+protected:
+	static duk_context*  GetJSCtx(void)    {return s_pJSCtx;}
+	static SDL_Window*   GetWindow(void)   {return s_pWindow;}
+	static SDL_Renderer* GetRenderer(void) {return s_pRenderer;}
+
 public:
-	static int s_iWinScale;
-	static int s_iWinWidth;
-	static int s_iWinHeight;
+	static class AdLevel* s_pCurLvl;
 
 public:
 	static bool Init(int iWidth, int iHeight, int iScale);
@@ -36,8 +46,9 @@ public:
 	static void Render(void);
 
 public:
-	static SDL_Window*   GetWindow(void) {return s_pWindow;}
-	static SDL_Renderer* GetRenderer(void) {return s_pRenderer;}
+	static void SetLevel(class AdLevel* pLvl);
+	static int  GetWidth(void)  {return s_iWinWidth;}
+	static int  GetHeight(void) {return s_iWinHeight;}
 };
 
 #endif
