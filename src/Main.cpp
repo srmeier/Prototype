@@ -15,6 +15,7 @@
 #include "AdBase.h"
 #include "AdLevel.h"
 #include "AdScreen.h"
+#include "AdTiledManager.h"
 #include "AdSpriteManager.h"
 
 //-----------------------------------------------------------------------------
@@ -26,10 +27,13 @@ int SDL_main(int argc, char* argv[]) {
 	}
 
 	// TESTING
+	AdTiledManager tiledMng;
+	tiledMng.Load("testing");
+
+	printf("%d %d %d\n", tiledMng.N(), tiledMng.Width(), tiledMng.Height());
+
 	AdLevel* lvl = new AdLevel();
 	lvl->Load("testing");
-
-	AdLevel::SetLevel(lvl);
 	//
 
 	SDL_Event sdlEvent = {};
@@ -38,8 +42,10 @@ int SDL_main(int argc, char* argv[]) {
 
 		AdScreen::Clear();
 
-		AdBase::Update(&sdlEvent);
-		AdBase::Render();
+		// TESTING
+		lvl->Update(&sdlEvent);
+		lvl->Render();
+		//
 
 		AdScreen::Present();
 	}

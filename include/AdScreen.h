@@ -25,7 +25,9 @@ public:
 public:
 	static void Clear(void);
 	static void Present(void);
-	static void DrawSprite(SDL_Point pntLoc, SDL_Surface* pSprite);
+	static void DrawSprite(
+		SDL_Point pntLoc, SDL_Surface* pSprite
+	);
 };
 
 #endif

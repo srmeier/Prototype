@@ -3,7 +3,7 @@
 
 #include "AdLevel.h"
 #include "AdScreen.h"
-#include "AdPlayer.h"
+#include "AdEntity.h"
 #include "AdSpriteManager.h"
 
 //-----------------------------------------------------------------------------
@@ -98,6 +98,7 @@ void AdLevel::Load(const char* pName) {
 	char pFN[FILENAME_MAX];
 	sprintf(pFN, "data/maps/%s.json", m_pName);
 
+	/*
 	duk_context* ctx = GetJSCtx();
 
 	duk_push_string_file(ctx, pFN);
@@ -156,10 +157,12 @@ void AdLevel::Load(const char* pName) {
 	}
 
 	duk_pop_2(ctx);
+	*/
 }
 
 //-----------------------------------------------------------------------------
 void AdLevel::Unload(void) {
+	/*
 	if(m_pIndices && m_nLayers>0) {
 		for(int j=0; j<m_nLayers; ++j) {
 			if(m_pIndices[j] == NULL) continue;
@@ -188,10 +191,11 @@ void AdLevel::Unload(void) {
 	m_iWidth   = 0;
 	m_iHeight  = 0;
 	m_nLayers  = 0;
+	*/
 }
 
 //-----------------------------------------------------------------------------
-void AdLevel::SetPlayer(class AdPlayer* pPlayer) {
+void AdLevel::SetPlayer(class AdEntity* pPlayer) {
 	m_pPlayer = pPlayer;
 	if(pPlayer) m_pPlayer->m_pCurLvl = this;
 }

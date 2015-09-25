@@ -33,12 +33,12 @@
     <ClCompile Include="src\AdLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdPlayer.cpp">
+    <ClCompile Include="src\AdEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
+    <ClCompile Include="src\AdTiledManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AdBase.h">
@@ -59,7 +59,10 @@
     <ClInclude Include="include\AdLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdPlayer.h">
+    <ClInclude Include="include\AdEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdTiledManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

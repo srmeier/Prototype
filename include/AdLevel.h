@@ -12,7 +12,7 @@ protected:
 	SDL_Surface**   m_pLayers;
 	int**           m_pIndices;
 	char            m_pName[0xFF];
-	class AdPlayer* m_pPlayer;
+	class AdEntity* m_pPlayer;
 
 public:
 	SDL_Point m_pntPos;
@@ -24,7 +24,7 @@ public:
 public:
 	void Load(const char* pName);
 	void Unload(void);
-	void SetPlayer(class AdPlayer* pPlayer);
+	void SetPlayer(class AdEntity* pPlayer);
 
 public:
 	AdLevel(void);

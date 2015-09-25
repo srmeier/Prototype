@@ -2,22 +2,16 @@
 */
 
 #include "AdBase.h"
-#include "AdLevel.h"
-#include "AdPlayer.h"
 #include "AdScreen.h"
 #include "AdSpriteManager.h"
 
 //-----------------------------------------------------------------------------
 SDL_Window*   AdBase::s_pWindow;
-duk_context*  AdBase::s_pJSCtx;
 SDL_Renderer* AdBase::s_pRenderer;
 
 int AdBase::s_iWinScale;
 int AdBase::s_iWinWidth;
 int AdBase::s_iWinHeight;
-
-AdLevel*  AdBase::s_pCurLvl;
-AdPlayer* AdBase::s_pPlayer;
 
 //-----------------------------------------------------------------------------
 bool AdBase::Init(int iWidth, int iHeight, int iScale) {
@@ -81,30 +75,16 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 		return false;
 	}
 
-	s_pJSCtx = duk_create_heap_default();
-
-	if(s_pJSCtx == NULL) {
-		fprintf(stderr, "ERROR: Failed to create Duktape heap!\n");
-		return false;
-	}
-
 	if(AdScreen::Init() == false) return false;
 	if(AdSpriteManager::Init(8, 8, "data/spritesheet.bmp") == false) return false;
-
-	s_pPlayer = new AdPlayer();
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 void AdBase::Quit(void) {
-	if(s_pCurLvl) delete s_pCurLvl;
-	delete s_pPlayer;
-
 	AdSpriteManager::Quit();
 	AdScreen::Quit();
-
-	duk_destroy_heap(s_pJSCtx);
 
 	SDL_DestroyRenderer(s_pRenderer);
 	s_pRenderer = NULL;
@@ -121,35 +101,4 @@ void AdBase::Quit(void) {
 	TTF_Quit();
 
 	SDL_Quit();
-}
-
-//-----------------------------------------------------------------------------
-void AdBase::Update(SDL_Event* sdlEvent) {
-	switch(sdlEvent->type) {
-		case SDL_KEYDOWN: {
-			switch(sdlEvent->key.keysym.sym) {
-				case SDLK_ESCAPE: Quit(); exit(0); break;
-			}
-		} break;
-	}
-
-	if(s_pCurLvl == NULL) return;
-	s_pCurLvl->Update(sdlEvent);
-}
-
-//-----------------------------------------------------------------------------
-void AdBase::Render(void) {
-	if(s_pCurLvl == NULL) return;
-	s_pCurLvl->Render();
-}
-
-//-----------------------------------------------------------------------------
-void AdBase::SetLevel(class AdLevel* pLvl) {
-	if(s_pCurLvl) {
-		s_pCurLvl->SetPlayer(NULL);
-		delete s_pCurLvl;
-	}
-
-	s_pCurLvl = pLvl;
-	s_pCurLvl->SetPlayer(s_pPlayer);
 }
