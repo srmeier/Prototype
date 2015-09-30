@@ -32,6 +32,13 @@ int SDL_main(int argc, char* argv[]) {
 
 	printf("%d %d %d\n", tiledMng.N(), tiledMng.Width(), tiledMng.Height());
 
+	//m_pLayers  = (SDL_Surface**) calloc(m_nLayers, sizeof(SDL_Surface*));
+	/*
+	m_pLayers[j] = AdSpriteManager::BuildSprite(
+		m_iWidth, m_iHeight, m_pIndices[j]
+	);
+	*/
+
 	AdLevel* lvl = new AdLevel();
 	lvl->Load("testing");
 	//

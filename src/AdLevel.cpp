@@ -8,15 +8,10 @@
 
 //-----------------------------------------------------------------------------
 AdLevel::AdLevel(void) {
-	memset(m_pName, 0x00, 0xFF);
+	memset(m_pName, 0x00, NAME_LENGTH);
 	memset(&m_pntPos, 0x00, sizeof(SDL_Point));
 
-	m_iWidth   = 0;
-	m_iHeight  = 0;
-	m_nLayers  = 0;
-	m_pIndices = NULL;
 	m_pLayers  = NULL;
-	m_pPlayer  = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -44,20 +39,17 @@ void AdLevel::Update(SDL_Event* sdlEvent) {
 	}
 
 	if(bReload && !bChkReload) {
-		char pName[0xFF];
+		char pName[NAME_LENGTH];
 		strcpy(pName, m_pName);
 
 		Unload(); Load(pName);
 
 	} else if(!bReload) bChkReload = false;
-
-	if(m_pPlayer == NULL) return;
-	m_pPlayer->Update(sdlEvent);
 }
 
 //-----------------------------------------------------------------------------
 void AdLevel::Render(void) {
-	for(int j=0; j<m_nLayers; ++j) {
+	for(int j=0; j<tiledMng.N(); ++j) {
 		// TEMP
 		if(j==2 || j==3) continue;
 		if(j > 1) {
@@ -69,9 +61,6 @@ void AdLevel::Render(void) {
 
 		AdScreen::DrawSprite(m_pntPos, m_pLayers[j]);
 	}
-
-	if(m_pPlayer == NULL) return;
-	m_pPlayer->Render();
 
 	/*
 	// TESTING
@@ -95,8 +84,15 @@ void AdLevel::Load(const char* pName) {
 
 	strcpy(m_pName, pName);
 
-	char pFN[FILENAME_MAX];
-	sprintf(pFN, "data/maps/%s.json", m_pName);
+	tiledMng.Load("testing");
+
+	m_pLayers = (SDL_Surface**) malloc(tiledMng.N()*sizeof(SDL_Surface*));
+
+	for(int j=0; j<tiledMng.N(); ++j) {
+		m_pLayers[j] = AdSpriteManager::BuildSprite(
+			tiledMng.Width(), tiledMng.Height(), tiledMng.GetLayer(j)
+		);
+	}
 
 	/*
 	duk_context* ctx = GetJSCtx();
@@ -192,10 +188,4 @@ void AdLevel::Unload(void) {
 	m_iHeight  = 0;
 	m_nLayers  = 0;
 	*/
-}
-
-//-----------------------------------------------------------------------------
-void AdLevel::SetPlayer(class AdEntity* pPlayer) {
-	m_pPlayer = pPlayer;
-	if(pPlayer) m_pPlayer->m_pCurLvl = this;
 }

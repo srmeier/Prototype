@@ -61,7 +61,6 @@ void AdTiledManager::Load(const char* pName) {
 	if(duk_is_array(ctx, -1)) {
 		m_nLayers  = duk_get_length(ctx, -1);
 		m_pIndices = (int**) calloc(m_nLayers, sizeof(int*));
-		//m_pLayers  = (SDL_Surface**) calloc(m_nLayers, sizeof(SDL_Surface*));
 
 		for(int j=0; j<m_nLayers; ++j) {
 			duk_get_prop_index(ctx, -1, j);
@@ -79,12 +78,6 @@ void AdTiledManager::Load(const char* pName) {
 						m_pIndices[j][i] = duk_to_int(ctx, -1);
 						duk_pop(ctx);
 					}
-
-					/*
-					m_pLayers[j] = AdSpriteManager::BuildSprite(
-						m_iWidth, m_iHeight, m_pIndices[j]
-					);
-					*/
 				} else {
 					fprintf(stderr,
 						"NOTE: Failed to match layer size with map size for level %s!\n", pName

@@ -14,6 +14,7 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
 
+#define NAME_LENGTH 0xFF
 #define WINDOW_TITLE "Prototype"
 
 //-----------------------------------------------------------------------------

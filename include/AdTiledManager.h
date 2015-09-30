@@ -27,6 +27,8 @@ public:
 	void Load(const char* pName);
 
 public:
+	int* GetLayer(int l) {return m_pIndices[l];}
+
 	int GetTile(int iLayer, int iIndex) {
 		if(!m_pIndices        ||
 			iIndex<0          ||
