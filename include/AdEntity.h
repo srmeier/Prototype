@@ -4,7 +4,7 @@
 #include "AdBase.h"
 
 //-----------------------------------------------------------------------------
-class AdEntity: public AdBase {
+class AdEntity {
 protected:
 	bool bUp, bDown;
 	bool bLeft, bRight;

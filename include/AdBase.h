@@ -16,6 +16,8 @@
 
 #define NAME_LENGTH 0xFF
 #define WINDOW_TITLE "Prototype"
+#define MAP_LOCATION "data/maps/%s.json"
+#define SPRITE_LOCATION "data/spritesheet.bmp"
 
 //-----------------------------------------------------------------------------
 class AdBase {

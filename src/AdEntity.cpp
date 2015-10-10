@@ -55,11 +55,13 @@ void AdEntity::Update(SDL_Event* sdlEvent) {
 		} break;
 	}
 
+	/*
 	if(m_pCurLvl == NULL) return;
 	if(bUp)         m_pCurLvl->m_pntPos.y+=2;
 	else if(bDown)  m_pCurLvl->m_pntPos.y-=2;
 	else if(bLeft)  m_pCurLvl->m_pntPos.x+=2;
 	else if(bRight) m_pCurLvl->m_pntPos.x-=2;
+	*/
 }
 
 //-----------------------------------------------------------------------------

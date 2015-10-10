@@ -1,8 +1,6 @@
 #ifndef __ADTILEDMANAGER_H_
 #define __ADTILEDMANAGER_H_
 
-#include "AdBase.h"
-
 //-----------------------------------------------------------------------------
 class AdTiledManager {
 private:

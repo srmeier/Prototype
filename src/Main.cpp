@@ -2,9 +2,7 @@
 //-----------------------------------------------------------------------------
 // TODO
 //-----------------------------------------------------------------------------
-- need to abstract the duktape/tiled piece so I can use it for simply grabing
-	multiple layers and use them for either background/foreground or for
-	multiple frames in an animation
+- 
 
 //-----------------------------------------------------------------------------
 // DESIGN DECISIONS
@@ -27,18 +25,6 @@ int SDL_main(int argc, char* argv[]) {
 	}
 
 	// TESTING
-	AdTiledManager tiledMng;
-	tiledMng.Load("testing");
-
-	printf("%d %d %d\n", tiledMng.N(), tiledMng.Width(), tiledMng.Height());
-
-	//m_pLayers  = (SDL_Surface**) calloc(m_nLayers, sizeof(SDL_Surface*));
-	/*
-	m_pLayers[j] = AdSpriteManager::BuildSprite(
-		m_iWidth, m_iHeight, m_pIndices[j]
-	);
-	*/
-
 	AdLevel* lvl = new AdLevel();
 	lvl->Load("testing");
 	//

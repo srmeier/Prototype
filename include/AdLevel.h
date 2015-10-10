@@ -5,16 +5,11 @@
 #include "AdTiledManager.h"
 
 //-----------------------------------------------------------------------------
-class AdLevel: public AdBase {
+class AdLevel {
 protected:
-	SDL_Surface** m_pLayers;
-	char          m_pName[NAME_LENGTH];
-
-	// TODO: rename this
-	AdTiledManager tiledMng;
-
-public:
-	SDL_Point m_pntPos;
+	AdTiledManager m_objMap;
+	SDL_Surface**  m_pLayers;
+	char           m_pName[NAME_LENGTH];
 
 public:
 	void Update(SDL_Event* sdlEvent);

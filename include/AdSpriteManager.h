@@ -14,7 +14,7 @@ protected:
 	static int s_iSprHeight;
 
 public:
-	static bool Init(int iWidth, int iHeight, const char* pFileName);
+	static bool Init(int iWidth, int iHeight);
 	static void Quit(void);
 
 public:

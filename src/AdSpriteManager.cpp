@@ -12,11 +12,11 @@ int AdSpriteManager::s_iSprWidth;
 int AdSpriteManager::s_iSprHeight;
 
 //-----------------------------------------------------------------------------
-bool AdSpriteManager::Init(int iWidth, int iHeight, const char* pFileName) {
+bool AdSpriteManager::Init(int iWidth, int iHeight) {
 	s_iSprWidth  = iWidth;
 	s_iSprHeight = iHeight;
 
-	SDL_Surface* surface = SDL_LoadBMP(pFileName);
+	SDL_Surface* surface = SDL_LoadBMP(SPRITE_LOCATION);
 
 	if(surface == NULL) {
 		fprintf(stderr, SDL_GetError());

@@ -1,6 +1,7 @@
 /*
 */
 
+#include "AdBase.h"
 #include "AdTiledManager.h"
 
 //-----------------------------------------------------------------------------
@@ -36,7 +37,7 @@ void AdTiledManager::Load(const char* pName) {
 	Unload();
 
 	char pFN[FILENAME_MAX];
-	sprintf(pFN, "data/maps/%s.json", pName);
+	sprintf(pFN, MAP_LOCATION, pName);
 
 	duk_context* ctx = s_pJSCtx;
 
@@ -78,10 +79,6 @@ void AdTiledManager::Load(const char* pName) {
 						m_pIndices[j][i] = duk_to_int(ctx, -1);
 						duk_pop(ctx);
 					}
-				} else {
-					fprintf(stderr,
-						"NOTE: Failed to match layer size with map size for level %s!\n", pName
-					);
 				}
 			}
 

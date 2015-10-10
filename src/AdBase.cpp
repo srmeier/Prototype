@@ -76,7 +76,7 @@ bool AdBase::Init(int iWidth, int iHeight, int iScale) {
 	}
 
 	if(AdScreen::Init() == false) return false;
-	if(AdSpriteManager::Init(8, 8, "data/spritesheet.bmp") == false) return false;
+	if(AdSpriteManager::Init(8, 8) == false) return false;
 
 	return true;
 }
