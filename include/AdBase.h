@@ -19,6 +19,7 @@
 #define MAP_LOCATION "data/maps/%s.json"
 #define SPRITE_LOCATION "data/spritesheet.bmp"
 #define COLLISION_LAYER 3
+#define PLAYER_DRAW_LAYER 1
 
 //-----------------------------------------------------------------------------
 class AdBase {

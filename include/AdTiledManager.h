@@ -2,6 +2,7 @@
 #define __ADTILEDMANAGER_H_
 
 #include "AdBase.h"
+#include "AdEntity.h"
 
 //-----------------------------------------------------------------------------
 class AdTiledManager {
@@ -10,18 +11,23 @@ private:
 	static int          s_iInstances;
 
 protected:
-	int   m_iWidth;
-	int   m_iHeight;
-	int   m_nLayers;
-	int** m_pIndices;
+	int        m_iWidth;
+	int        m_iHeight;
+	int        m_nLayers;
+	int**      m_pIndices;
+	int        m_nEntities;
+	AdEntity** m_pEntities;
 
 protected:
 	void Unload(void);
 
 public:
-	int N(void)      {return m_nLayers;}
-	int Width(void)  {return m_iWidth;}
-	int Height(void) {return m_iHeight;}
+	int Width(void)   {return m_iWidth;}
+	int Height(void)  {return m_iHeight;}
+	int nLayers(void) {return m_nLayers;}
+
+public:
+	int nEntities(void) {return m_nEntities;}
 
 public:
 	void Load(const char* pName);
@@ -42,6 +48,15 @@ public:
 	int GetTile(int iLayer, int iX, int iY) {
 		int iIndex = (iY*m_iWidth)+iX;
 		return GetTile(iLayer, iIndex);
+	}
+
+public:
+	AdEntity* GetEntity(int iEnt) {
+		if(m_pEntities==NULL ||
+			iEnt<0           ||
+			iEnt>=m_nEntities
+		) return NULL;
+		return m_pEntities[iEnt];
 	}
 
 public:

@@ -88,6 +88,8 @@
     <ClCompile Include="src\AdBase.cpp" />
     <ClCompile Include="src\AdLevel.cpp" />
     <ClCompile Include="src\AdEntity.cpp" />
+    <ClCompile Include="src\AdMoveable.cpp" />
+    <ClCompile Include="src\AdPlayer.cpp" />
     <ClCompile Include="src\AdScreen.cpp" />
     <ClCompile Include="src\AdSpriteManager.cpp" />
     <ClCompile Include="src\AdTiledManager.cpp" />
@@ -98,6 +100,8 @@
     <ClInclude Include="include\AdBase.h" />
     <ClInclude Include="include\AdLevel.h" />
     <ClInclude Include="include\AdEntity.h" />
+    <ClInclude Include="include\AdMoveable.h" />
+    <ClInclude Include="include\AdPlayer.h" />
     <ClInclude Include="include\AdScreen.h" />
     <ClInclude Include="include\AdSpriteManager.h" />
     <ClInclude Include="include\AdTiledManager.h" />

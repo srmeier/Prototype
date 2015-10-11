@@ -1,6 +1,8 @@
 /*
 */
 
+#include "AdPlayer.h"
+#include "AdMoveable.h"
 #include "AdTiledManager.h"
 
 //-----------------------------------------------------------------------------
@@ -16,6 +18,13 @@ AdTiledManager::AdTiledManager(void) {
 			fprintf(stderr, "ERROR: Failed to create Duktape heap!\n");
 		}
 	}
+
+	m_iWidth    = 0;
+	m_iHeight   = 0;
+	m_nLayers   = 0;
+	m_pIndices  = NULL;
+	m_nEntities = 0;
+	m_pEntities = NULL;
 
 	s_iInstances++;
 }
@@ -85,7 +94,8 @@ void AdTiledManager::Load(const char* pName) {
 
 			duk_pop(ctx);
 
-			// NOTE: --
+			// NOTE: loop over the map entities and add them to the array of
+			// entities
 			duk_get_prop_string(ctx, -1, "name");
 
 			if(duk_is_string(ctx, -1)) {
@@ -99,7 +109,34 @@ void AdTiledManager::Load(const char* pName) {
 						for(int e=0; e<size; ++e) {
 							duk_get_prop_index(ctx, -1, e);
 
-							
+							duk_get_prop_string(ctx, -1, "type");
+							const char* type = duk_get_string(ctx, -1);
+
+							AdEntity* pEnt = NULL;
+
+							if(!strcmp(type, "NPC-PLAYER")) {
+								duk_pop(ctx);
+								pEnt = new AdPlayer();
+								pEnt->Load(ctx);
+							} else if(!strcmp(type, "NPC-TEST")) {
+								duk_pop(ctx);
+								pEnt = new AdMoveable();
+								pEnt->Load(ctx);
+							} else if(!strcmp(type, "TEST")) {
+								duk_pop(ctx);
+								pEnt = new AdEntity();
+								pEnt->Load(ctx);
+							} else {
+								duk_pop(ctx);
+							}
+
+							if(pEnt) {
+								m_pEntities = (AdEntity**) realloc(
+									m_pEntities, ++m_nEntities*sizeof(AdEntity*)
+								);
+
+								m_pEntities[m_nEntities-1] = pEnt;
+							}
 
 							duk_pop(ctx);
 						}
@@ -133,4 +170,18 @@ void AdTiledManager::Unload(void) {
 	m_iWidth   = 0;
 	m_iHeight  = 0;
 	m_nLayers  = 0;
+
+	if(m_pEntities && m_nEntities>0) {
+		for(int e=0; e<m_nEntities; ++e) {
+			if(m_pEntities[e] == NULL) continue;
+
+			delete m_pEntities[e];
+			m_pEntities[e] = NULL;
+		}
+
+		free(m_pEntities);
+		m_pEntities = NULL;
+	}
+
+	m_nEntities = 0;
 }

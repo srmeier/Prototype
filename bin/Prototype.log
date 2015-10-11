@@ -1,27 +1,27 @@
-﻿Build started 10/10/2015 10:47:43 PM.
+﻿Build started 10/11/2015 1:16:03 PM.
      1>Project "C:\Users\srmeier\Documents\Visual Studio 2015\Projects\Prototype\Prototype.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Iexternal\include\ /Iinclude\ /Zi /nologo /W3 /WX- /sdl /Od /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"bin\\" /Fd"bin\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt src\AdEntity.cpp src\AdLevel.cpp src\AdTiledManager.cpp
-         AdEntity.cpp
-         AdLevel.cpp
-         AdTiledManager.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Iexternal\include\ /Iinclude\ /Zi /nologo /W3 /WX- /sdl /Od /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"bin\\" /Fd"bin\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt src\AdMoveable.cpp
+         AdMoveable.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\Prototype.exe" /NOLOGO /LIBPATH:external\lib\ SDL2.lib SDL2main.lib SDL2_ttf.lib SDL2_net.lib SDL2_mixer.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"bin\Prototype.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\Prototype.lib" /MACHINE:X86 /SAFESEH /NODEFAULTLIB:msvcrt.lib /IGNORE:4049 bin\AdBase.obj
          bin\AdLevel.obj
          bin\AdEntity.obj
+         bin\AdMoveable.obj
+         bin\AdPlayer.obj
          bin\AdScreen.obj
          bin\AdSpriteManager.obj
          bin\AdTiledManager.obj
          bin\Duktape.obj
          bin\Main.obj
          Generating code
-         184 of 968 functions (19.0%) were compiled, the rest were copied from previous compilation.
+         1 of 993 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
            0 functions were new in current compilation
-           343 functions had inline decision re-evaluated but remain unchanged
+           0 functions had inline decision re-evaluated but remain unchanged
          Finished generating code
          Prototype.vcxproj -> C:\Users\srmeier\Documents\Visual Studio 2015\Projects\Prototype\bin\Prototype.exe
      1>Done Building Project "C:\Users\srmeier\Documents\Visual Studio 2015\Projects\Prototype\Prototype.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.98
+Time Elapsed 00:00:00.93
