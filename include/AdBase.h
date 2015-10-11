@@ -18,6 +18,7 @@
 #define WINDOW_TITLE "Prototype"
 #define MAP_LOCATION "data/maps/%s.json"
 #define SPRITE_LOCATION "data/spritesheet.bmp"
+#define COLLISION_LAYER 3
 
 //-----------------------------------------------------------------------------
 class AdBase {

@@ -1,7 +1,6 @@
 /*
 */
 
-#include "AdBase.h"
 #include "AdTiledManager.h"
 
 //-----------------------------------------------------------------------------
@@ -66,6 +65,8 @@ void AdTiledManager::Load(const char* pName) {
 		for(int j=0; j<m_nLayers; ++j) {
 			duk_get_prop_index(ctx, -1, j);
 
+			// NOTE: if this is a tile layer grab the indices, otherwise set
+			// to NULL
 			duk_get_prop_string(ctx, -1, "data");
 
 			if(duk_is_array(ctx, -1)) {
@@ -79,6 +80,32 @@ void AdTiledManager::Load(const char* pName) {
 						m_pIndices[j][i] = duk_to_int(ctx, -1);
 						duk_pop(ctx);
 					}
+				}
+			}
+
+			duk_pop(ctx);
+
+			// NOTE: --
+			duk_get_prop_string(ctx, -1, "name");
+
+			if(duk_is_string(ctx, -1)) {
+				if(!strcmp(duk_get_string(ctx, -1), "entities")) {
+					// NOTE: -2 referring back to object and not the string
+					duk_get_prop_string(ctx, -2, "objects");
+
+					if(duk_is_array(ctx, -1)) {
+						int size = duk_get_length(ctx, -1);
+						
+						for(int e=0; e<size; ++e) {
+							duk_get_prop_index(ctx, -1, e);
+
+							
+
+							duk_pop(ctx);
+						}
+					}
+
+					duk_pop(ctx);
 				}
 			}
 
