@@ -92,28 +92,15 @@ void AdLevel::Render(void) {
 		AdScreen::DrawSprite(pntLvl, m_pLayers[j]);
 
 		if(j == PLAYER_DRAW_LAYER) {
+			// NOTE: render entities
+			for(int e=0; e<m_objMap.nEntities(); ++e) {
+				if(m_pPlayer == m_objMap.GetEntity(e)) continue;
+				m_objMap.GetEntity(e)->Render(this);
+			}
+
 			m_pPlayer->Render(this);
 		}
 	}
-
-	// NOTE: render entities
-	for(int e=0; e<m_objMap.nEntities(); ++e) {
-		if(m_pPlayer == m_objMap.GetEntity(e)) continue;
-		m_objMap.GetEntity(e)->Render(this);
-	}
-
-	// TESTING
-	SDL_Surface* spr  = AdSpriteManager::BuildSprite("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-	SDL_Surface* spr0 = AdSpriteManager::BuildSprite("1234567890!#$%&*()-+=[]\"\'<>.?/");
-
-	SDL_Point pnt = {8*4, 8*32};
-	AdScreen::DrawSprite(pnt, spr);
-	pnt.y += 8;
-	AdScreen::DrawSprite(pnt, spr0);
-
-	SDL_FreeSurface(spr);
-	SDL_FreeSurface(spr0);
-	//
 }
 
 //-----------------------------------------------------------------------------

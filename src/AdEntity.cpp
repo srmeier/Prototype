@@ -46,15 +46,15 @@ void AdEntity::Unload(void) {
 
 //-----------------------------------------------------------------------------
 void AdEntity::Update(AdLevel* pLvl) {
-	// TESTING
-	SDL_Rect res;
-	SDL_Rect recPlayer = {8*pLvl->GetPlayer()->m_iI, 8*pLvl->GetPlayer()->m_iJ, 8*6, 8*6};
+	SDL_Rect Result;
+	SDL_Rect Player = {
+		8*pLvl->GetPlayer()->m_iI, 8*pLvl->GetPlayer()->m_iJ, 8*6, 8*6
+	};
 
-	if(SDL_IntersectRect(&m_recTrigger, &recPlayer, &res))
+	if(SDL_IntersectRect(&m_recTrigger, &Player, &Result))
 		m_bTriggered = true;
 	else
 		m_bTriggered = false;
-	//
 }
 
 //-----------------------------------------------------------------------------

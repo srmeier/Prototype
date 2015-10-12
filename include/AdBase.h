@@ -14,12 +14,16 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
 
-#define NAME_LENGTH 0xFF
-#define WINDOW_TITLE "Prototype"
-#define MAP_LOCATION "data/maps/%s.json"
-#define SPRITE_LOCATION "data/spritesheet.bmp"
-#define COLLISION_LAYER 3
+#define UP_DIREC          0
+#define DOWN_DIREC        1
+#define LEFT_DIREC        2
+#define RIGHT_DIREC       3
+#define COLLISION_LAYER   3
 #define PLAYER_DRAW_LAYER 1
+#define NAME_LENGTH       0xFF
+#define WINDOW_TITLE      "Prototype"
+#define MAP_LOCATION      "data/maps/%s.json"
+#define SPRITE_LOCATION   "data/spritesheet.bmp"
 
 //-----------------------------------------------------------------------------
 class AdBase {

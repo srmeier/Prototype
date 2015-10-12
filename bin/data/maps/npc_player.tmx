@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="6" height="6" tilewidth="8" tileheight="8" nextobjectid="1">
+ <tileset firstgid="1" name="spritesheet" tilewidth="8" tileheight="8" tilecount="8192">
+  <image source="../spritesheet.bmp" trans="ff00ff" width="512" height="1024"/>
+ </tileset>
+ <layer name="frame_0" width="6" height="6">
+  <data encoding="csv">
+805,806,807,808,809,810,
+869,870,871,872,873,874,
+933,934,935,936,937,938,
+997,998,999,1000,1001,1002,
+1061,1062,1063,1064,1065,1066,
+1125,1126,1127,1128,1129,1130
+</data>
+ </layer>
+</map>

@@ -2,9 +2,15 @@
 #define __ADMOVEABLE_H_
 
 #include "AdEntity.h"
+#include "AdTiledManager.h"
 
 //-----------------------------------------------------------------------------
 class AdMoveable: public AdEntity {
+protected:
+	int            m_iFrame;
+	SDL_Surface**  m_pFrames;
+	AdTiledManager m_AniMap;
+
 public:
 	int  m_iI;
 	int  m_iJ;
@@ -30,6 +36,12 @@ public:
 
 protected:
 	virtual void Load(duk_context* pCtx);
+
+public:
+	virtual void Unload(void);
+
+public:
+	bool DoesCollide(class AdTiledManager* pMap, int iDirec);
 
 public:
 	virtual void Update(class AdLevel* pLvl);

@@ -89,7 +89,10 @@ void AdScreen::Present(void) {
 	s_fElapsedTime = ((float) s_uiDiffCount/(float) s_uiCountFreq);
 
 	if((1.0f/60.0f)-s_fElapsedTime > 0) {
-		SDL_Delay((uint32_t) (1000.0f*((1.0f/60.0f)-s_fElapsedTime)));
+		// NOTE: without this there seems to be a more consistent framerate
+		// but on older computers sometimes the vsync doesn't work right
+		//SDL_Delay((uint32_t) (1000.0f*((1.0f/60.0f)-s_fElapsedTime)));
+
 		s_fTotTime += 1.0f/60.0f;
 	} else {
 		s_fTotTime += s_fElapsedTime;

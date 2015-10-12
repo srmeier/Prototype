@@ -133,9 +133,7 @@ void AdTiledManager::Load(const char* pName) {
 							if(pEnt) {
 								m_pEntities = (AdEntity**) realloc(
 									m_pEntities, ++m_nEntities*sizeof(AdEntity*)
-								);
-
-								m_pEntities[m_nEntities-1] = pEnt;
+								); m_pEntities[m_nEntities-1] = pEnt;
 							}
 
 							duk_pop(ctx);
