@@ -5,6 +5,10 @@
 
 //-----------------------------------------------------------------------------
 class AdPlayer: public AdMoveable {
+public:
+	int m_iMouseX;
+	int m_iMouseY;
+
 protected:
 	void Load(duk_context* pCtx);
 

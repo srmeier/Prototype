@@ -53,6 +53,11 @@ void AdLevel::Update(SDL_Event* sdlEvent) {
 		if(!m_pPlayer->m_bRight) m_pPlayer->m_bRightCheck = false;
 
 		switch(sdlEvent->type) {
+			case SDL_MOUSEMOTION: {
+				m_pPlayer->m_iMouseX = sdlEvent->motion.x;
+				m_pPlayer->m_iMouseY = sdlEvent->motion.y;
+			} break;
+
 			case SDL_KEYDOWN: {
 				switch(sdlEvent->key.keysym.sym) {
 					case SDLK_UP:    m_pPlayer->m_bUp    = true; break;
