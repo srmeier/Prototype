@@ -41,11 +41,17 @@ public:
 			iLayer<0          ||
 			iLayer>=m_nLayers ||
 			iIndex>=(m_iWidth*m_iHeight)
-		) return 0;
+		) return -1;
 		return m_pIndices[iLayer][iIndex];
 	}
 
 	int GetTile(int iLayer, int iX, int iY) {
+		if(!m_pIndices   ||
+			iX<0         ||
+			iX>=m_iWidth ||
+			iY<0         ||
+			iY>=m_iHeight
+		) return -1;
 		int iIndex = (iY*m_iWidth)+iX;
 		return GetTile(iLayer, iIndex);
 	}

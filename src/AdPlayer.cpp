@@ -142,15 +142,24 @@ void AdPlayer::Render(AdLevel* pLvl) {
 	SDL_Point pnt = {AdBase::GetWidth()/2-48/2, AdBase::GetHeight()/2-48/2};
 	AdScreen::DrawSprite(pnt, m_pFrames[m_iFrame]);
 
-	int offset_x = AdBase::GetWidth()/2-48/2+pLvl->GetPlayer()->m_recTrigger.x;
-	int offset_y = AdBase::GetHeight()/2-48/2+pLvl->GetPlayer()->m_recTrigger.y;
-	//SDL_Point pnt = {m_recTrigger.x+offset_x, m_recTrigger.y+offset_y};
+	// the x, y offset added to an NPCs x, y to draw to screen
+	int offset_x = AdBase::GetWidth()/2-48/2+m_recTrigger.x;
+	int offset_y = AdBase::GetHeight()/2-48/2+m_recTrigger.y;
 
-	//pnt.x = (int) floor(m_iMouseX/(2.0f*48.0f)) * 48; pnt.y = (int) floor(m_iMouseY/(2.0f*48.0f)) * 48;
-	//pnt.x = (m_iMouseX-AdBase::GetWidth()/2-48/2) + offset_x;
-	//pnt.y = (m_iMouseY-AdBase::GetHeight()/2-48/2) + offset_y;
-	pnt.x = m_iMouseX/2 - 48/2;
-	pnt.y = m_iMouseY/2 - 48/2;
+	// the mouses x, y - offset to draw to the screen
+	int offset_i = (int) floor((m_iMouseX/2-48/2 + offset_x)/8.0f);
+	int offset_j = (int) floor((m_iMouseY/2-48/2 + offset_y)/8.0f);
 
-	AdScreen::DrawSprite(pnt, m_pFrames[1]);
+	// set to an 8x8 grid and subtract the offset to return to screen from map
+	pnt.x = m_iMouseX/2-48/2;//offset_i*8 - offset_x;
+	pnt.y = m_iMouseY/2-48/2;//offset_j*8 - offset_y;
+
+
+	int offset_ii = offset_i - 2*(int) floor(offset_x/8.0f);
+	int offset_jj = offset_j - 2*(int) floor(offset_y/8.0f);
+
+	if(DoesCollide(pLvl->GetTiledMap(), -1, offset_ii-m_iI, offset_jj-m_iJ))
+		AdScreen::DrawSprite(pnt, m_pFrames[2]);
+	else
+		AdScreen::DrawSprite(pnt, m_pFrames[1]);
 }

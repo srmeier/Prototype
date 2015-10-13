@@ -3,6 +3,7 @@
 // TODO
 //-----------------------------------------------------------------------------
 - work on the door entity
+- added a weird collision detect for offset points, need to check this
 
 //-----------------------------------------------------------------------------
 // DESIGN DECISIONS

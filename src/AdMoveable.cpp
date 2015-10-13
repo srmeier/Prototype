@@ -104,7 +104,10 @@ void AdMoveable::Unload(void) {
 }
 
 //-----------------------------------------------------------------------------
-bool AdMoveable::DoesCollide(class AdTiledManager* pMap, int iDirec) {
+bool AdMoveable::DoesCollide(
+	class AdTiledManager* pMap, int iDirec /*= -1*/,
+	int iOffsetI /*= 0*/, int iOffsetJ /*= 0*/
+) {
 	int iW = (int) floor(m_recTrigger.w/8.0f);
 	int iH = (int) floor(m_recTrigger.h/8.0f);
 
@@ -114,28 +117,46 @@ bool AdMoveable::DoesCollide(class AdTiledManager* pMap, int iDirec) {
 		case UP_DIREC: {
 			bool bTemp = true;
 			for(int i=0; i<iW; ++i) {
-				bTemp = (bTemp && pMap->GetTile(COLLISION_LAYER, m_iI+i, m_iJ-1)==0);
+				bTemp = (bTemp && pMap->GetTile(
+					COLLISION_LAYER, (m_iI+iOffsetI)+i, (m_iJ+iOffsetJ)-1)==0
+				);
 			} bCollides = !bTemp;
 		} break;
 
 		case DOWN_DIREC: {
 			bool bTemp = true;
 			for(int i=0; i<iW; ++i) {
-				bTemp = (bTemp && pMap->GetTile(COLLISION_LAYER, m_iI+i, m_iJ+iH)==0);
+				bTemp = (bTemp && pMap->GetTile(
+					COLLISION_LAYER, (m_iI+iOffsetI)+i, (m_iJ+iOffsetJ)+iH)==0
+				);
 			} bCollides = !bTemp;
 		} break;
 
 		case LEFT_DIREC: {
 			bool bTemp = true;
 			for(int j=0; j<iH; ++j) {
-				bTemp = (bTemp && pMap->GetTile(COLLISION_LAYER, m_iI-1, m_iJ+j)==0);
+				bTemp = (bTemp && pMap->GetTile(
+					COLLISION_LAYER, (m_iI+iOffsetI)-1, (m_iJ+iOffsetJ)+j)==0
+				);
 			} bCollides = !bTemp;
 		} break;
 
 		case RIGHT_DIREC: {
 			bool bTemp = true;
 			for(int j=0; j<iH; ++j) {
-				bTemp = (bTemp && pMap->GetTile(COLLISION_LAYER, m_iI+iW, m_iJ+j)==0);
+				bTemp = (bTemp && pMap->GetTile(
+					COLLISION_LAYER, (m_iI+iOffsetI)+iW, (m_iJ+iOffsetJ)+j)==0
+				);
+			} bCollides = !bTemp;
+		} break;
+
+		default: {
+			bool bTemp = true;
+			for(int j=0; j<iH; ++j) {
+				for(int i=0; i<iW; ++i)
+					bTemp = (bTemp && pMap->GetTile(
+						COLLISION_LAYER, (m_iI+iOffsetI)+i, (m_iJ+iOffsetJ)+j)==0
+					);
 			} bCollides = !bTemp;
 		} break;
 	}

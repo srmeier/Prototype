@@ -41,7 +41,10 @@ public:
 	virtual void Unload(void);
 
 public:
-	bool DoesCollide(class AdTiledManager* pMap, int iDirec);
+	bool DoesCollide(
+		class AdTiledManager* pMap, int iDirec = -1,
+		int iOffsetI = 0, int iOffsetJ = 0
+	);
 
 public:
 	virtual void Update(class AdLevel* pLvl);
