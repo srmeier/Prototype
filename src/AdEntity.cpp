@@ -61,15 +61,29 @@ void AdEntity::Update(AdLevel* pLvl) {
 void AdEntity::Render(AdLevel* pLvl) {
 	if(m_bTriggered) {
 		// TESTING
+		int inds[] = {
+			64*1+44, 64*1+45, 64*1+45, 64*1+45, 64*1+45, 64*1+45, 64*1+45, 64*1+45, 64*1+49,
+			64*2+44, 64*2+45, 64*2+45, 64*2+45, 64*2+45, 64*2+45, 64*2+45, 64*2+45, 64*2+49,
+			64*3+44, 64*3+45, 64*3+45, 64*3+45, 64*3+45, 64*3+45, 64*3+45, 64*3+45, 64*3+49,
+		};
+
+		SDL_Surface* bkg = AdSpriteManager::BuildSprite(9, 3, inds);
+
 		SDL_Surface* spr = AdSpriteManager::BuildSprite("EVENT!!");
 
+		/*
 		int offset_x = AdBase::GetWidth()/2-48/2+pLvl->GetPlayer()->m_recTrigger.x;
 		int offset_y = AdBase::GetHeight()/2-48/2+pLvl->GetPlayer()->m_recTrigger.y;
 
 		SDL_Point pnt = {m_recTrigger.x+offset_x, m_recTrigger.y+offset_y};
+		*/
+		SDL_Point pnt = {8, 8};
+		AdScreen::DrawSprite(pnt, bkg);
+		pnt.x += 8; pnt.y += 7;
 		AdScreen::DrawSprite(pnt, spr);
 
 		SDL_FreeSurface(spr);
+		SDL_FreeSurface(bkg);
 		//
 	}
 }
