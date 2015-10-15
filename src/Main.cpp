@@ -2,8 +2,15 @@
 //-----------------------------------------------------------------------------
 // TODO
 //-----------------------------------------------------------------------------
-- work on the door entity
-- added a weird collision detect for offset points, need to check this
+- need to consider the statements below and design a simple system for them
+- need to have the "EVENT!" show up at the same time when the cursor is over
+	the entity. meaning that the entity will likely need a preTrigger? or
+	something. clicking on this will most likely require some sort of
+	pathfinding to get the player over to the entity and once the player gets
+	there it will auto-trigger the main trigger or something
+- need to add the "clicked" hand and also the up, down, left, right arrows for
+	moving "screens"
+- need a typical "arrow" cursor for when messages are being sent to player
 
 //-----------------------------------------------------------------------------
 // DESIGN DECISIONS
@@ -36,6 +43,8 @@ int SDL_main(int argc, char* argv[]) {
 	SDL_Surface* pCursorSurf = AdSpriteManager::BuildSprite(4, 4, ind);
 	SDL_Cursor* pCursor = SDL_CreateColorCursor(pCursorSurf, 0, 0);
 	SDL_SetCursor(pCursor);
+
+	SDL_ShowCursor(false);
 
 	AdLevel* lvl = new AdLevel();
 	lvl->Load("testing");

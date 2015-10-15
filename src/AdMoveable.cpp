@@ -165,33 +165,16 @@ bool AdMoveable::DoesCollide(
 }
 
 //-----------------------------------------------------------------------------
-void AdMoveable::Update(AdLevel* pLvl) {
-	AdEntity::Update(pLvl);
-
-	// TESTING
-	if(m_bTriggered) m_bFreeToMove = false;
-	else m_bFreeToMove = true;
-
-	m_bForceMove = true;
-	int newDirec = rand()%256;
-
-	if(newDirec<4) {
-		m_iForcedirec = newDirec;
-	} else if(newDirec<32) {
-		m_iForcedirec = -1;
-	}
-	//
-	
-	AdTiledManager* pMap = pLvl->GetTiledMap();
-
-	if(!m_bFreeToMove && !m_bMoving) return;
-
+void AdMoveable::HandleMovement(class AdTiledManager* pMap) {
 	m_iI = (int) floor(m_recTrigger.x/8.0f);
 	m_iJ = (int) floor(m_recTrigger.y/8.0f);
+
+	if(!m_bFreeToMove && !m_bMoving) return;
 
 	if(m_iMoveframe>0) m_iMoveframe--;
 	else if(m_bMoving) {
 		m_bMoving = false;
+		m_bForceMove = false;
 	}
 
 	if(!m_bMoving) {
@@ -200,30 +183,30 @@ void AdMoveable::Update(AdLevel* pLvl) {
 				!DoesCollide(pMap, UP_DIREC)
 			) {
 				m_bMoving    = true;
-				m_bForceMove = false;
 				m_iMoveframe = 8-1;
 				m_iMovedirec = UP_DIREC;
 			} else if(m_iForcedirec==DOWN_DIREC &&
 				!DoesCollide(pMap, DOWN_DIREC)
 			) {
 				m_bMoving    = true;
-				m_bForceMove = false;
 				m_iMoveframe = 8-1;
 				m_iMovedirec = DOWN_DIREC;
 			} else if(m_iForcedirec==LEFT_DIREC &&
 				!DoesCollide(pMap, LEFT_DIREC)
 			) {
 				m_bMoving    = true;
-				m_bForceMove = false;
 				m_iMoveframe = 8-1;
 				m_iMovedirec = LEFT_DIREC;
 			} else if(m_iForcedirec==RIGHT_DIREC &&
 				!DoesCollide(pMap, RIGHT_DIREC)
 			) {
 				m_bMoving    = true;
-				m_bForceMove = false;
 				m_iMoveframe = 8-1;
 				m_iMovedirec = RIGHT_DIREC;
+			} else {
+				// NOTE: if the forced moves results in a collision then toggle
+				// off the forced move
+				m_bForceMove = false;
 			}
 		} else {
 			if(m_bUp && !DoesCollide(pMap, UP_DIREC)) {
@@ -257,11 +240,35 @@ void AdMoveable::Update(AdLevel* pLvl) {
 }
 
 //-----------------------------------------------------------------------------
+void AdMoveable::Update(AdLevel* pLvl) {
+	AdEntity::Update(pLvl);
+
+	// TESTING
+	if(m_bTriggered) m_bFreeToMove = false;
+	else m_bFreeToMove = true;
+
+	m_bForceMove = true;
+	int newDirec = rand()%256;
+
+	if(newDirec<4) {
+		m_iForcedirec = newDirec;
+	} else if(newDirec<32) {
+		m_iForcedirec = -1;
+	}
+	//
+	
+	AdTiledManager* pMap;
+	pMap = pLvl->GetTiledMap();
+	
+	HandleMovement(pMap);
+}
+
+//-----------------------------------------------------------------------------
 void AdMoveable::Render(AdLevel* pLvl) {
 	int offset_x = AdBase::GetWidth()/2-48/2+pLvl->GetPlayer()->m_recTrigger.x;
 	int offset_y = AdBase::GetHeight()/2-48/2+pLvl->GetPlayer()->m_recTrigger.y;
 
-	SDL_Point pnt = {offset_x+m_recTrigger.x, offset_y+m_recTrigger.y};
+	SDL_Point pnt = {/*offset_x+*/m_recTrigger.x, /*offset_y+*/m_recTrigger.y};
 	AdScreen::DrawSprite(pnt, m_pFrames[m_iFrame]);
 
 	if(m_bTriggered) {
@@ -271,7 +278,7 @@ void AdMoveable::Render(AdLevel* pLvl) {
 		int offset_x = AdBase::GetWidth()/2-48/2+pLvl->GetPlayer()->m_recTrigger.x;
 		int offset_y = AdBase::GetHeight()/2-48/2+pLvl->GetPlayer()->m_recTrigger.y;
 
-		SDL_Point pnt = {m_recTrigger.x+offset_x, m_recTrigger.y+offset_y};
+		SDL_Point pnt = {m_recTrigger.x/*+offset_x*/, m_recTrigger.y/*+offset_y*/};
 		AdScreen::DrawSprite(pnt, spr);
 
 		SDL_FreeSurface(spr);

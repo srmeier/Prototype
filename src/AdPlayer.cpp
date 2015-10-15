@@ -8,8 +8,13 @@
 
 //-----------------------------------------------------------------------------
 AdPlayer::AdPlayer(void) {
-	m_iMouseX = 0;
-	m_iMouseY = 0;
+	m_iMouseX     = 0;
+	m_iMouseY     = 0;
+	m_bMouseLeft  = false;
+	m_bMouseRight = false;
+
+	// TEMP
+	show_move_cursor = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -24,11 +29,11 @@ void AdPlayer::Load(duk_context* pCtx) {
 	duk_pop(pCtx);
 
 	duk_get_prop_string(pCtx, -1, "x");
-	m_recTrigger.x = -duk_to_int(pCtx, -1);
+	m_recTrigger.x = duk_to_int(pCtx, -1);//-duk_to_int(pCtx, -1);
 	duk_pop(pCtx);
 
 	duk_get_prop_string(pCtx, -1, "y");
-	m_recTrigger.y = -duk_to_int(pCtx, -1);
+	m_recTrigger.y = duk_to_int(pCtx, -1);//-duk_to_int(pCtx, -1);
 	duk_pop(pCtx);
 
 	duk_get_prop_string(pCtx, -1, "width");
@@ -63,103 +68,89 @@ void AdPlayer::Load(duk_context* pCtx) {
 
 //-----------------------------------------------------------------------------
 void AdPlayer::Update(AdLevel* pLvl) {
-	AdTiledManager* pMap = pLvl->GetTiledMap();
-
-	if(!m_bFreeToMove && !m_bMoving) return;
-
-	m_iI = (int) floor(-m_recTrigger.x/8.0f);
-	m_iJ = (int) floor(-m_recTrigger.y/8.0f);
-
-	if(m_iMoveframe>0) m_iMoveframe--;
-	else if(m_bMoving) {
-		m_bMoving = false;
-	}
-
-	if(!m_bMoving) {
-		if(m_bForceMove) {
-			if(m_iForcedirec==UP_DIREC &&
-				!DoesCollide(pMap, UP_DIREC)
-			) {
-				m_bMoving    = true;
-				m_bForceMove = false;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = UP_DIREC;
-			} else if(m_iForcedirec==DOWN_DIREC &&
-				!DoesCollide(pMap, DOWN_DIREC)
-			) {
-				m_bMoving    = true;
-				m_bForceMove = false;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = DOWN_DIREC;
-			} else if(m_iForcedirec==LEFT_DIREC &&
-				!DoesCollide(pMap, LEFT_DIREC)
-			) {
-				m_bMoving    = true;
-				m_bForceMove = false;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = LEFT_DIREC;
-			} else if(m_iForcedirec==RIGHT_DIREC &&
-				!DoesCollide(pMap, RIGHT_DIREC)
-			) {
-				m_bMoving    = true;
-				m_bForceMove = false;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = RIGHT_DIREC;
-			}
-		} else {
-			if(m_bUp && !DoesCollide(pMap, UP_DIREC)) {
-				m_bMoving    = true;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = UP_DIREC;
-			} else if(m_bDown && !DoesCollide(pMap, DOWN_DIREC)) {
-				m_bMoving    = true;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = DOWN_DIREC;
-			} else if(m_bLeft && !DoesCollide(pMap, LEFT_DIREC)) {
-				m_bMoving    = true;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = LEFT_DIREC;
-			} else if(m_bRight && !DoesCollide(pMap, RIGHT_DIREC)) {
-				m_bMoving    = true;
-				m_iMoveframe = 8-1;
-				m_iMovedirec = RIGHT_DIREC;
-			}
-		}
-	}
-
-	if(m_bMoving) {
-		switch(m_iMovedirec) {
-			case DOWN_DIREC:  m_recTrigger.y--; break;
-			case UP_DIREC:    m_recTrigger.y++; break;
-			case RIGHT_DIREC: m_recTrigger.x--; break;
-			case LEFT_DIREC:  m_recTrigger.x++; break;
-		}
-	}
+	AdTiledManager* pMap;
+	pMap = pLvl->GetTiledMap();
+	
+	HandleMovement(pMap);
 }
 
 //-----------------------------------------------------------------------------
 void AdPlayer::Render(AdLevel* pLvl) {
-	SDL_Point pnt = {AdBase::GetWidth()/2-48/2, AdBase::GetHeight()/2-48/2};
+	SDL_Point pnt = {m_recTrigger.x, m_recTrigger.y}; //{AdBase::GetWidth()/2-48/2, AdBase::GetHeight()/2-48/2};
 	AdScreen::DrawSprite(pnt, m_pFrames[m_iFrame]);
 
 	// the x, y offset added to an NPCs x, y to draw to screen
-	int offset_x = AdBase::GetWidth()/2-48/2+m_recTrigger.x;
-	int offset_y = AdBase::GetHeight()/2-48/2+m_recTrigger.y;
+	int offset_x = 0;/*AdBase::GetWidth()/2-48/2+m_recTrigger.x;*/
+	int offset_y = 0;/*AdBase::GetHeight()/2-48/2+m_recTrigger.y;*/
 
 	// the mouses x, y - offset to draw to the screen
-	int offset_i = (int) floor((m_iMouseX/2-48/2 + offset_x)/8.0f);
-	int offset_j = (int) floor((m_iMouseY/2-48/2 + offset_y)/8.0f);
+	int offset_i = (int) floor((m_iMouseX-48/2 + offset_x)/8.0f);
+	int offset_j = (int) floor((m_iMouseY-48/2 + offset_y)/8.0f);
 
 	// set to an 8x8 grid and subtract the offset to return to screen from map
-	pnt.x = m_iMouseX/2-48/2;//offset_i*8 - offset_x;
-	pnt.y = m_iMouseY/2-48/2;//offset_j*8 - offset_y;
-
+	pnt.x = m_iMouseX-48/2;//offset_i*8 - offset_x;
+	pnt.y = m_iMouseY-48/2;//offset_j*8 - offset_y;
 
 	int offset_ii = offset_i - 2*(int) floor(offset_x/8.0f);
 	int offset_jj = offset_j - 2*(int) floor(offset_y/8.0f);
 
-	if(DoesCollide(pLvl->GetTiledMap(), -1, offset_ii-m_iI, offset_jj-m_iJ))
-		AdScreen::DrawSprite(pnt, m_pFrames[2]);
-	else
-		AdScreen::DrawSprite(pnt, m_pFrames[1]);
+	// TESTING (move to update)
+	static int goal_ii = m_iI;
+	static int goal_jj = m_iJ;
+
+	if(DoesCollide(pLvl->GetTiledMap(), -1, offset_ii-m_iI, offset_jj-m_iJ)) {
+		if(show_move_cursor) AdScreen::DrawSprite(pnt, m_pFrames[2]);
+	} else {
+		if(show_move_cursor) AdScreen::DrawSprite(pnt, m_pFrames[1]);
+
+		if(m_bMouseLeft && !m_bMoving) {
+			goal_ii = offset_ii;
+			goal_jj = offset_jj;
+		}
+	}
+
+	/*
+	pnt.x = 8*offset_ii; pnt.y = 8*offset_jj;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+	pnt.x = 8*offset_ii+48-8; pnt.y = 8*offset_jj;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+	pnt.x = 8*offset_ii; pnt.y = 8*offset_jj+48-8;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+	pnt.x = 8*offset_ii+48-8; pnt.y = 8*offset_jj+48-8;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+
+	pnt.x = 8*m_iI; pnt.y = 8*m_iJ;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+	pnt.x = 8*m_iI+48-8; pnt.y = 8*m_iJ;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+	pnt.x = 8*m_iI; pnt.y = 8*m_iJ+48-8;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+	pnt.x = 8*m_iI+48-8; pnt.y = 8*m_iJ+48-8;
+	AdScreen::DrawSprite(pnt, m_pFrames[3]);
+	*/
+
+	if(goal_ii==m_iI && goal_jj==m_iJ /*&& m_bForceMove*/) {
+		//m_bForceMove = false;
+		//m_bMoving = false;
+	} else if(!m_bForceMove) {
+		if(goal_jj<m_iJ) {
+			m_bForceMove = true;
+			m_iForcedirec = UP_DIREC;
+		}
+		if(goal_jj>m_iJ) {
+			m_bForceMove = true;
+			m_iForcedirec = DOWN_DIREC;
+		}
+		if(goal_ii<m_iI) {
+			m_bForceMove = true;
+			m_iForcedirec = LEFT_DIREC;
+		}
+		if(goal_ii>m_iI) {
+			m_bForceMove = true;
+			m_iForcedirec = RIGHT_DIREC;
+		}
+	}
+
+	//printf("%d %d %d\n", m_iI, goal_ii, m_bForceMove);
+	//
 }

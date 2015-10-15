@@ -45,6 +45,7 @@ public:
 	static void Quit(void);
 
 public:
+	static int GetScale(void)  {return s_iWinScale;}
 	static int GetWidth(void)  {return s_iWinWidth;}
 	static int GetHeight(void) {return s_iWinHeight;}
 };

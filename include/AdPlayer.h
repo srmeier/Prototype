@@ -6,8 +6,13 @@
 //-----------------------------------------------------------------------------
 class AdPlayer: public AdMoveable {
 public:
-	int m_iMouseX;
-	int m_iMouseY;
+	int  m_iMouseX;
+	int  m_iMouseY;
+	bool m_bMouseLeft;
+	bool m_bMouseRight;
+
+	// TEMP
+	bool show_move_cursor;
 
 protected:
 	void Load(duk_context* pCtx);

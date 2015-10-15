@@ -46,6 +46,8 @@ public:
 		int iOffsetI = 0, int iOffsetJ = 0
 	);
 
+	void HandleMovement(class AdTiledManager* pMap);
+
 public:
 	virtual void Update(class AdLevel* pLvl);
 	virtual void Render(class AdLevel* pLvl);

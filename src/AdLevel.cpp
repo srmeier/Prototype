@@ -46,7 +46,7 @@ void AdLevel::Update(SDL_Event* sdlEvent) {
 	} else if(!bReload) bChkReload = false;
 
 	// NOTE: update the player's input
-	if(!m_pPlayer->m_bForceMove) {
+	//if(!m_pPlayer->m_bForceMove) {
 		if(!m_pPlayer->m_bUp)    m_pPlayer->m_bUpCheck    = false;
 		if(!m_pPlayer->m_bDown)  m_pPlayer->m_bDownCheck  = false;
 		if(!m_pPlayer->m_bLeft)  m_pPlayer->m_bLeftCheck  = false;
@@ -54,8 +54,23 @@ void AdLevel::Update(SDL_Event* sdlEvent) {
 
 		switch(sdlEvent->type) {
 			case SDL_MOUSEMOTION: {
-				m_pPlayer->m_iMouseX = sdlEvent->motion.x;
-				m_pPlayer->m_iMouseY = sdlEvent->motion.y;
+				// NOTE: divide by the window scale
+				m_pPlayer->m_iMouseX = sdlEvent->motion.x/AdBase::GetScale();
+				m_pPlayer->m_iMouseY = sdlEvent->motion.y/AdBase::GetScale();
+			} break;
+
+			case SDL_MOUSEBUTTONDOWN: {
+				switch(sdlEvent->button.button) {
+					case SDL_BUTTON_LEFT:  m_pPlayer->m_bMouseLeft  = true; break;
+					case SDL_BUTTON_RIGHT: m_pPlayer->m_bMouseRight = true; break;
+				}
+			} break;
+
+			case SDL_MOUSEBUTTONUP: {
+				switch(sdlEvent->button.button) {
+					case SDL_BUTTON_LEFT:  m_pPlayer->m_bMouseLeft  = false; break;
+					case SDL_BUTTON_RIGHT: m_pPlayer->m_bMouseRight = false; break;
+				}
 			} break;
 
 			case SDL_KEYDOWN: {
@@ -76,11 +91,26 @@ void AdLevel::Update(SDL_Event* sdlEvent) {
 				}
 			} break;
 		}
-	}
+	//}
 
 	// NOTE: update entities
+	m_pPlayer->show_move_cursor = true; // TEMP
+	SDL_ShowCursor(false);
+
 	for(int e=0; e<m_objMap.nEntities(); ++e) {
-		m_objMap.GetEntity(e)->Update(this);
+		AdEntity* pEnt = m_objMap.GetEntity(e);
+		pEnt->Update(this);
+
+		// TEMP
+		if(
+			m_pPlayer->m_iMouseX<(pEnt->m_recTrigger.x+pEnt->m_recTrigger.w) &&
+			m_pPlayer->m_iMouseX>pEnt->m_recTrigger.x &&
+			m_pPlayer->m_iMouseY<(pEnt->m_recTrigger.y+pEnt->m_recTrigger.h) &&
+			m_pPlayer->m_iMouseY>pEnt->m_recTrigger.y
+		) {
+			m_pPlayer->show_move_cursor = false;
+			SDL_ShowCursor(true);
+		}
 	}
 }
 
@@ -90,8 +120,8 @@ void AdLevel::Render(void) {
 		if(j == COLLISION_LAYER) continue;
 
 		SDL_Point pntLvl = {
-			AdBase::GetWidth()/2-48/2+m_pPlayer->m_recTrigger.x,
-			AdBase::GetHeight()/2-48/2+m_pPlayer->m_recTrigger.y
+			0, //AdBase::GetWidth()/2-48/2+m_pPlayer->m_recTrigger.x,
+			0  //AdBase::GetHeight()/2-48/2+m_pPlayer->m_recTrigger.y
 		};
 
 		AdScreen::DrawSprite(pntLvl, m_pLayers[j]);
