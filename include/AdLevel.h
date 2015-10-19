@@ -12,6 +12,7 @@ protected:
 	SDL_Surface**  m_pLayers;
 	AdPlayer*      m_pPlayer;
 	char           m_pName[NAME_LENGTH];
+	SDL_Cursor*    m_pCursorHandOpen;
 
 public:
 	AdMoveable*     GetPlayer(void) {return m_pPlayer;}

@@ -77,6 +77,7 @@ void AdEntity::Render(AdLevel* pLvl) {
 
 		SDL_Point pnt = {m_recTrigger.x+offset_x, m_recTrigger.y+offset_y};
 		*/
+		
 		SDL_Point pnt = {8, 8};
 		AdScreen::DrawSprite(pnt, bkg);
 		pnt.x += 8; pnt.y += 7;

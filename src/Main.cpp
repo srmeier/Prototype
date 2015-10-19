@@ -2,6 +2,11 @@
 //-----------------------------------------------------------------------------
 // TODO
 //-----------------------------------------------------------------------------
+- the level should control the cursor
+	- this is hard to do because the map itself won't hold the dimensions of
+		the cursor
+	- could code the cursors into the level object by hand
+
 - need to consider the statements below and design a simple system for them
 - need to have the "EVENT!" show up at the same time when the cursor is over
 	the entity. meaning that the entity will likely need a preTrigger? or
@@ -33,19 +38,6 @@ int SDL_main(int argc, char* argv[]) {
 	}
 
 	// TESTING
-	int ind[] = {
-		64*1+40, 64*1+41, 64*1+42, 64*1+43,
-		64*2+40, 64*2+41, 64*2+42, 64*2+43,
-		64*3+40, 64*3+41, 64*3+42, 64*3+43,
-		64*4+40, 64*4+41, 64*4+42, 64*4+43,
-	};
-
-	SDL_Surface* pCursorSurf = AdSpriteManager::BuildSprite(4, 4, ind);
-	SDL_Cursor* pCursor = SDL_CreateColorCursor(pCursorSurf, 0, 0);
-	SDL_SetCursor(pCursor);
-
-	SDL_ShowCursor(false);
-
 	AdLevel* lvl = new AdLevel();
 	lvl->Load("testing");
 	//
@@ -65,8 +57,7 @@ int SDL_main(int argc, char* argv[]) {
 	}
 
 	// TESTING
-	SDL_FreeCursor(pCursor);
-	SDL_FreeSurface(pCursorSurf);
+	delete lvl;
 	//
 
 	AdBase::Quit();

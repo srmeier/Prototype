@@ -29,11 +29,11 @@ void AdPlayer::Load(duk_context* pCtx) {
 	duk_pop(pCtx);
 
 	duk_get_prop_string(pCtx, -1, "x");
-	m_recTrigger.x = duk_to_int(pCtx, -1);//-duk_to_int(pCtx, -1);
+	m_recTrigger.x = duk_to_int(pCtx, -1);
 	duk_pop(pCtx);
 
 	duk_get_prop_string(pCtx, -1, "y");
-	m_recTrigger.y = duk_to_int(pCtx, -1);//-duk_to_int(pCtx, -1);
+	m_recTrigger.y = duk_to_int(pCtx, -1);
 	duk_pop(pCtx);
 
 	duk_get_prop_string(pCtx, -1, "width");
@@ -76,36 +76,27 @@ void AdPlayer::Update(AdLevel* pLvl) {
 
 //-----------------------------------------------------------------------------
 void AdPlayer::Render(AdLevel* pLvl) {
-	SDL_Point pnt = {m_recTrigger.x, m_recTrigger.y}; //{AdBase::GetWidth()/2-48/2, AdBase::GetHeight()/2-48/2};
+	SDL_Point pnt = {m_recTrigger.x, m_recTrigger.y};
 	AdScreen::DrawSprite(pnt, m_pFrames[m_iFrame]);
 
-	// the x, y offset added to an NPCs x, y to draw to screen
-	int offset_x = 0;/*AdBase::GetWidth()/2-48/2+m_recTrigger.x;*/
-	int offset_y = 0;/*AdBase::GetHeight()/2-48/2+m_recTrigger.y;*/
+	pnt.x = m_iMouseX-48/2;
+	pnt.y = m_iMouseY-48/2;
 
-	// the mouses x, y - offset to draw to the screen
-	int offset_i = (int) floor((m_iMouseX-48/2 + offset_x)/8.0f);
-	int offset_j = (int) floor((m_iMouseY-48/2 + offset_y)/8.0f);
-
-	// set to an 8x8 grid and subtract the offset to return to screen from map
-	pnt.x = m_iMouseX-48/2;//offset_i*8 - offset_x;
-	pnt.y = m_iMouseY-48/2;//offset_j*8 - offset_y;
-
-	int offset_ii = offset_i - 2*(int) floor(offset_x/8.0f);
-	int offset_jj = offset_j - 2*(int) floor(offset_y/8.0f);
+	int offset_i = (int) floor((m_iMouseX-48/2)/8.0f);
+	int offset_j = (int) floor((m_iMouseY-48/2)/8.0f);
 
 	// TESTING (move to update)
-	static int goal_ii = m_iI;
-	static int goal_jj = m_iJ;
+	static int goal_i = m_iI;
+	static int goal_j = m_iJ;
 
-	if(DoesCollide(pLvl->GetTiledMap(), -1, offset_ii-m_iI, offset_jj-m_iJ)) {
+	if(DoesCollide(pLvl->GetTiledMap(), -1, offset_i-m_iI, offset_j-m_iJ)) {
 		if(show_move_cursor) AdScreen::DrawSprite(pnt, m_pFrames[2]);
 	} else {
 		if(show_move_cursor) AdScreen::DrawSprite(pnt, m_pFrames[1]);
 
 		if(m_bMouseLeft && !m_bMoving) {
-			goal_ii = offset_ii;
-			goal_jj = offset_jj;
+			goal_i = offset_i;
+			goal_j = offset_j;
 		}
 	}
 
@@ -129,28 +120,23 @@ void AdPlayer::Render(AdLevel* pLvl) {
 	AdScreen::DrawSprite(pnt, m_pFrames[3]);
 	*/
 
-	if(goal_ii==m_iI && goal_jj==m_iJ /*&& m_bForceMove*/) {
-		//m_bForceMove = false;
-		//m_bMoving = false;
-	} else if(!m_bForceMove) {
-		if(goal_jj<m_iJ) {
+	if(goal_i!=m_iI || goal_j!=m_iJ || !m_bForceMove) {
+		if(goal_j<m_iJ) {
 			m_bForceMove = true;
 			m_iForcedirec = UP_DIREC;
 		}
-		if(goal_jj>m_iJ) {
+		if(goal_j>m_iJ) {
 			m_bForceMove = true;
 			m_iForcedirec = DOWN_DIREC;
 		}
-		if(goal_ii<m_iI) {
+		if(goal_i<m_iI) {
 			m_bForceMove = true;
 			m_iForcedirec = LEFT_DIREC;
 		}
-		if(goal_ii>m_iI) {
+		if(goal_i>m_iI) {
 			m_bForceMove = true;
 			m_iForcedirec = RIGHT_DIREC;
 		}
 	}
-
-	//printf("%d %d %d\n", m_iI, goal_ii, m_bForceMove);
 	//
 }

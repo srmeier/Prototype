@@ -268,7 +268,7 @@ void AdMoveable::Render(AdLevel* pLvl) {
 	int offset_x = AdBase::GetWidth()/2-48/2+pLvl->GetPlayer()->m_recTrigger.x;
 	int offset_y = AdBase::GetHeight()/2-48/2+pLvl->GetPlayer()->m_recTrigger.y;
 
-	SDL_Point pnt = {/*offset_x+*/m_recTrigger.x, /*offset_y+*/m_recTrigger.y};
+	SDL_Point pnt = {m_recTrigger.x, m_recTrigger.y};
 	AdScreen::DrawSprite(pnt, m_pFrames[m_iFrame]);
 
 	if(m_bTriggered) {
@@ -278,12 +278,10 @@ void AdMoveable::Render(AdLevel* pLvl) {
 		int offset_x = AdBase::GetWidth()/2-48/2+pLvl->GetPlayer()->m_recTrigger.x;
 		int offset_y = AdBase::GetHeight()/2-48/2+pLvl->GetPlayer()->m_recTrigger.y;
 
-		SDL_Point pnt = {m_recTrigger.x/*+offset_x*/, m_recTrigger.y/*+offset_y*/};
+		SDL_Point pnt = {m_recTrigger.x, m_recTrigger.y};
 		AdScreen::DrawSprite(pnt, spr);
 
 		SDL_FreeSurface(spr);
-
-		//
 
 		int inds0[] = {
 			64*18+43, 64*18+44, 64*18+45, 64*18+46, 64*18+47, 64*18+48,

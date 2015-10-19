@@ -10,11 +10,28 @@
 AdLevel::AdLevel(void) {
 	m_pLayers = NULL;
 	memset(m_pName, 0x00, NAME_LENGTH);
+
+	// NOTE: open hand cursor - used when player is hovering over an entity
+	int hand_open_ind[] = {
+		64*1+40, 64*1+41, 64*1+42, 64*1+43,
+		64*2+40, 64*2+41, 64*2+42, 64*2+43,
+		64*3+40, 64*3+41, 64*3+42, 64*3+43,
+		64*4+40, 64*4+41, 64*4+42, 64*4+43,
+	};
+
+	SDL_Surface* pCursorHandOpen = AdSpriteManager::BuildSprite(4, 4, hand_open_ind);
+	m_pCursorHandOpen = SDL_CreateColorCursor(pCursorHandOpen, 0, 0);
+	SDL_FreeSurface(pCursorHandOpen);
+
+	SDL_SetCursor(m_pCursorHandOpen);
+	SDL_ShowCursor(false);
 }
 
 //-----------------------------------------------------------------------------
 AdLevel::~AdLevel(void) {
 	Unload();
+
+	SDL_FreeCursor(m_pCursorHandOpen);
 }
 
 //-----------------------------------------------------------------------------
@@ -46,52 +63,50 @@ void AdLevel::Update(SDL_Event* sdlEvent) {
 	} else if(!bReload) bChkReload = false;
 
 	// NOTE: update the player's input
-	//if(!m_pPlayer->m_bForceMove) {
-		if(!m_pPlayer->m_bUp)    m_pPlayer->m_bUpCheck    = false;
-		if(!m_pPlayer->m_bDown)  m_pPlayer->m_bDownCheck  = false;
-		if(!m_pPlayer->m_bLeft)  m_pPlayer->m_bLeftCheck  = false;
-		if(!m_pPlayer->m_bRight) m_pPlayer->m_bRightCheck = false;
+	if(!m_pPlayer->m_bUp)    m_pPlayer->m_bUpCheck    = false;
+	if(!m_pPlayer->m_bDown)  m_pPlayer->m_bDownCheck  = false;
+	if(!m_pPlayer->m_bLeft)  m_pPlayer->m_bLeftCheck  = false;
+	if(!m_pPlayer->m_bRight) m_pPlayer->m_bRightCheck = false;
 
-		switch(sdlEvent->type) {
-			case SDL_MOUSEMOTION: {
-				// NOTE: divide by the window scale
-				m_pPlayer->m_iMouseX = sdlEvent->motion.x/AdBase::GetScale();
-				m_pPlayer->m_iMouseY = sdlEvent->motion.y/AdBase::GetScale();
-			} break;
+	switch(sdlEvent->type) {
+		case SDL_MOUSEMOTION: {
+			// NOTE: divide by the window scale
+			m_pPlayer->m_iMouseX = sdlEvent->motion.x/AdBase::GetScale();
+			m_pPlayer->m_iMouseY = sdlEvent->motion.y/AdBase::GetScale();
+		} break;
 
-			case SDL_MOUSEBUTTONDOWN: {
-				switch(sdlEvent->button.button) {
-					case SDL_BUTTON_LEFT:  m_pPlayer->m_bMouseLeft  = true; break;
-					case SDL_BUTTON_RIGHT: m_pPlayer->m_bMouseRight = true; break;
-				}
-			} break;
+		case SDL_MOUSEBUTTONDOWN: {
+			switch(sdlEvent->button.button) {
+				case SDL_BUTTON_LEFT:  m_pPlayer->m_bMouseLeft  = true; break;
+				case SDL_BUTTON_RIGHT: m_pPlayer->m_bMouseRight = true; break;
+			}
+		} break;
 
-			case SDL_MOUSEBUTTONUP: {
-				switch(sdlEvent->button.button) {
-					case SDL_BUTTON_LEFT:  m_pPlayer->m_bMouseLeft  = false; break;
-					case SDL_BUTTON_RIGHT: m_pPlayer->m_bMouseRight = false; break;
-				}
-			} break;
+		case SDL_MOUSEBUTTONUP: {
+			switch(sdlEvent->button.button) {
+				case SDL_BUTTON_LEFT:  m_pPlayer->m_bMouseLeft  = false; break;
+				case SDL_BUTTON_RIGHT: m_pPlayer->m_bMouseRight = false; break;
+			}
+		} break;
 
-			case SDL_KEYDOWN: {
-				switch(sdlEvent->key.keysym.sym) {
-					case SDLK_UP:    m_pPlayer->m_bUp    = true; break;
-					case SDLK_DOWN:  m_pPlayer->m_bDown  = true; break;
-					case SDLK_LEFT:  m_pPlayer->m_bLeft  = true; break;
-					case SDLK_RIGHT: m_pPlayer->m_bRight = true; break;
-				}
-			} break;
+		case SDL_KEYDOWN: {
+			switch(sdlEvent->key.keysym.sym) {
+				case SDLK_UP:    m_pPlayer->m_bUp    = true; break;
+				case SDLK_DOWN:  m_pPlayer->m_bDown  = true; break;
+				case SDLK_LEFT:  m_pPlayer->m_bLeft  = true; break;
+				case SDLK_RIGHT: m_pPlayer->m_bRight = true; break;
+			}
+		} break;
 
-			case SDL_KEYUP: {
-				switch(sdlEvent->key.keysym.sym) {
-					case SDLK_UP:    m_pPlayer->m_bUp    = false; break;
-					case SDLK_DOWN:  m_pPlayer->m_bDown  = false; break;
-					case SDLK_LEFT:  m_pPlayer->m_bLeft  = false; break;
-					case SDLK_RIGHT: m_pPlayer->m_bRight = false; break;
-				}
-			} break;
-		}
-	//}
+		case SDL_KEYUP: {
+			switch(sdlEvent->key.keysym.sym) {
+				case SDLK_UP:    m_pPlayer->m_bUp    = false; break;
+				case SDLK_DOWN:  m_pPlayer->m_bDown  = false; break;
+				case SDLK_LEFT:  m_pPlayer->m_bLeft  = false; break;
+				case SDLK_RIGHT: m_pPlayer->m_bRight = false; break;
+			}
+		} break;
+	}
 
 	// NOTE: update entities
 	m_pPlayer->show_move_cursor = true; // TEMP
@@ -119,10 +134,7 @@ void AdLevel::Render(void) {
 	for(int j=0; j<m_objMap.nLayers(); ++j) {
 		if(j == COLLISION_LAYER) continue;
 
-		SDL_Point pntLvl = {
-			0, //AdBase::GetWidth()/2-48/2+m_pPlayer->m_recTrigger.x,
-			0  //AdBase::GetHeight()/2-48/2+m_pPlayer->m_recTrigger.y
-		};
+		SDL_Point pntLvl = {0, 0};
 
 		AdScreen::DrawSprite(pntLvl, m_pLayers[j]);
 
