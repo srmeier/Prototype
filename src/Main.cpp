@@ -2,9 +2,11 @@
 //-----------------------------------------------------------------------------
 // TODO
 //-----------------------------------------------------------------------------
+- different color font?
+
 - the level should control the cursor
 	- this is hard to do because the map itself won't hold the dimensions of
-		the cursor
+		the cursor surface
 	- could code the cursors into the level object by hand
 
 - need to consider the statements below and design a simple system for them
